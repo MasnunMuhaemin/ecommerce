@@ -1,5 +1,5 @@
 <?php
-$admin_logged = $this->session->userdata('user_logged');
+$user_logged = $this->session->userdata('user_logged');
 ?>
 <div class="hero_area">
    <!-- header section strats -->
@@ -39,7 +39,7 @@ $admin_logged = $this->session->userdata('user_logged');
                   </li>
                   <?php } ?>
                      <?php
-                     if ($admin_logged["role"] == 'user') { 
+                     if ($user_logged["role"] == 'user') { 
                      ?> 
                   <li class="nav-item">
                      <a class="nav-link" href="" data-toggle="modal" data-target="#myModal">
