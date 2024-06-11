@@ -1,0 +1,10 @@
+<?php if($val->uuid_checkout == $vall->uuid_checkout){ ?>
+                                                <div class="carousel-item">
+                                                  <img src="<?= base_url("assets/uploads/foto_produk/".$vall->gambar_produk) ?>" class="w-100">
+                                                </div>
+                                                <!-- <?php echo $key; ?> -->
+                                              <?php }else{ ?>
+                                                <div class="carousel-item">
+                                                  <img src="<?= base_url("assets/uploads/foto_produk/".$vall->gambar_produk) ?>" class="w-100">
+                                                </div>
+                                              <?php } ?>
