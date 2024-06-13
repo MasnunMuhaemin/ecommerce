@@ -87,7 +87,7 @@ class Auth extends CI_Controller {
 				if($dataLogged != false){
 					if($dataLogged[0]->role == "admin" || $dataLogged[0]->role == "pengelola" || $dataLogged[0]->role == "pemilik"){
 						$array = array(
-							'id_user' => $dataLogged[0]->id_user,
+							'id_user' => $dataLogged[0]->id_users,
 							'nama_lengkap' => $dataLogged[0]->nama_lengkap,
 							'role' => $dataLogged[0]->role,
 							'email' => $dataLogged[0]->email,
@@ -100,16 +100,16 @@ class Auth extends CI_Controller {
 
 						$this->session->set_userdata( $dataSession );
 						
-
+// die('test');
 						redirect("admin", "refresh");
 					}else{
 						$array = array(
-							'id_user' => $dataLogged[0]->id_user,
+							'id_user' => $dataLogged[0]->id_users,
 							'nama_lengkap' => $dataLogged[0]->nama_lengkap,
 							'role' => $dataLogged[0]->role,
 							'email' => $dataLogged[0]->email,
 							'no_hp' => $dataLogged[0]->no_hp,
-							// 'alamat' => $dataLogged[0]->alamat
+							'alamat' => $dataLogged[0]->alamat
 						);
 
 						$dataSession = [
@@ -117,8 +117,9 @@ class Auth extends CI_Controller {
 						];
 						$this->session->set_userdata( $dataSession );
 
-						echo "<script>localStorage.setItem('uuid', '".$dataLogged[0]->id_user."_abs');</script>";
+						echo "<script>localStorage.setItem('uuid', '".$dataLogged[0]->id_users."_abs');</script>";
 
+						// die('test');
 						redirect("", "refresh");
 					}
 				}else{

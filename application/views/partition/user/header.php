@@ -14,8 +14,8 @@ $user_logged = $this->session->userdata('user_logged');
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav">
-                  <li class="nav-item active">
-                     <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
+                  <li class="nav-item">
+                     <a class="nav-link" href="<?= base_url() ?>">Home </a>
                   </li>
                   <!-- <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Pages <span class="caret"></span></a>
@@ -39,7 +39,8 @@ $user_logged = $this->session->userdata('user_logged');
                   </li>
                   <?php } ?>
                      <?php
-                     if ($user_logged["role"] == 'user') { 
+                     $role = $user_logged["role"] ?? null;
+                     if ($role == 'user' || $role != null) { 
                      ?> 
                   <li class="nav-item">
                      <a class="nav-link" href="" data-toggle="modal" data-target="#myModal">
@@ -142,7 +143,7 @@ $user_logged = $this->session->userdata('user_logged');
          <div class="row">
 
             <div class="col-sm-12 col-md-6">
-               <b>Olshop Markas Cemilan</b>
+               <b>Wardani Collection</b>
                <p class="text-justify">Alamat Pelanggan: Jalan Siliwangi Gg Lame 2 RT.08/05/RW.Lingkungan Aton Cijoho Kecamatan Kuningan Kabupaten Kuningan Jawa Barat 45513 Indonesia</p>
                <div class="row">
                   <div class="col-md-4">
@@ -220,7 +221,7 @@ $user_logged = $this->session->userdata('user_logged');
                   </div>
                   <!-- <?= var_dump($this->session->userdata('user_logged')) ?> -->
                   <label for="alamat_pemesan">Alamat Pemesan</label>
-                  <textarea name="alamat_pemesan" id="alamat_pemesan" class="form-control" placeholder="Kosongkan jika ingin mengirim ke alamat anda sendiri" cols="30" rows="3" required readonly><?= (isset($this->session->userdata['user_logged']) ? $this->session->userdata['user_logged']['alamat'] : '' ) ?></textarea>
+                  <textarea name="alamat_pemesan" id="alamat_pemesan" class="form-control" placeholder="Kosongkan jika ingin mengirim ke alamat anda sendiri" cols="30" rows="3" required></textarea>
                   <br>
                   <label for="alamat_pemesan_tambah">Alamat Pemesan Lainnya</label>
                   <textarea name="alamat_pemesan_tambah" id="alamat_pemesan_tambah" class="form-control" placeholder="Gunakan alamat lainnya" cols="30" rows="3"></textarea>
@@ -251,7 +252,7 @@ $user_logged = $this->session->userdata('user_logged');
                         if($this->session->userdata('user_logged')){
                       ?>
                       <!-- <a href="https://api.whatsapp.com/send?phone=6283824587800&text=test" class="btn btn-success w-100 disabled" id="btn_send_wa" target="_blank">Keep Cemilan <span class="fa fa-long-arrow-right"></span></a> -->
-                      <a href="#!" class="btn btn-success w-100 disabled" id="btn_send_wa">Lanjut Pembayaran <span class="fa fa-long-arrow-right"></span></a>
+                      <a href="#!" class="btn btn-success w-100 " id="btn_send_wa">Lanjut Pembayaran <span class="fa fa-long-arrow-right"></span></a>
                       <?php }else{ ?>
                       <a href="<?= base_url("login") ?>" class="btn btn-success w-100">Login terlebih dahulu untuk checkout</a>
                       <?php } ?>
