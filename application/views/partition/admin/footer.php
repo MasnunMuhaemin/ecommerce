@@ -7,7 +7,7 @@
 <!-- Main Footer -->
 <footer class="main-footer">
   <strong>© 2021 All Rights Reserved By <a href="https://fkom.uniku.ac.id/">SKRIPSI FKOM UNIKU</a></strong>
-  Create By <a href="https://www.instagram.com/riogofani/" target="_blank">RIO GOFANI</a>
+  Create By <a href="#" target="_blank">Amir</a>
   <!-- <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.2.0
     </div> -->
