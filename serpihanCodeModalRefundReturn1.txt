@@ -1,0 +1,2 @@
+<p>Gambar upload yang dari user</p>
+                                      <img src="<?= base_url("assets/uploads/foto_refund/".$vall->gambar_refund) ?>" class="w-100">
