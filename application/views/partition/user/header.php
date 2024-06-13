@@ -221,7 +221,7 @@ $user_logged = $this->session->userdata('user_logged');
                            <label for="alamat_pemesan">Alamat Pemesan</label>
                            <textarea name="alamat_pemesan" id="alamat_pemesan" class="form-control" placeholder="Kosongkan jika ingin mengirim ke alamat anda sendiri" cols="30" rows="3" required></textarea>
                            <br>
-                           <label for="alamat_pemesan_tambah">Alamat Pemesan Lainnya</label>
+                           <label for="alamat_pemesan_tambah"> Detail Alamat Pemesan</label>
                            <textarea name="alamat_pemesan_tambah" id="alamat_pemesan_tambah" class="form-control" placeholder="Gunakan alamat lainnya" cols="30" rows="3"></textarea>
                            <label for="no_penerima" class="mt-3">No. Penerima</label>
                            <input type="text" class="form-control mb-3" placeholder="Kosongkan untuk nomer sendiri" id="no_penerima" value="<?= (isset($this->session->userdata['user_logged']) ? $this->session->userdata['user_logged']['no_hp'] : '') ?>" required>

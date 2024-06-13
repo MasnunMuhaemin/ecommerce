@@ -55,7 +55,7 @@
 <div class="cpy_">
    <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://fkom.uniku.ac.id/">SKRIPSI FKOM UNIKU</a><br>
 
-      Create By <a href="https://www.instagram.com/riogofani/" target="_blank">Rio Gofani</a>
+      Create By <a href="#" target="_blank">Amir</a>
 
    </p>
 </div>
