@@ -1,27 +1,29 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
-		if(!$this->session->userdata('admin_logged')){
+		if (!$this->session->userdata('admin_logged')) {
 			redirect("login", "refresh");
 		}
 		$this->load->model('m_produk');
 		$this->load->model('M_Chat', 'm_chat');
 	}
 
-	public function index(){
-		if($this->m_produk->getAll() != null){
+	public function index()
+	{
+		if ($this->m_produk->getAll() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => $this->m_produk->getAll(),
 				'dataPengeluaran' => $this->m_produk->getAllPengeluaran(),
 				'dataPengeluaranFromLaporan' => $this->m_produk->getPengeluaran()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => null,
@@ -33,7 +35,8 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/home", $data);
 	}
 
-	function add_data(){
+	function add_data()
+	{
 		$data = [
 			'title' => "Dashboard | Tambah Data"
 		];
@@ -41,14 +44,15 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/add_data", $data);
 	}
 
-	function view_data(){
+	function view_data()
+	{
 
-		if($this->m_produk->getAll() != null){
+		if ($this->m_produk->getAll() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => $this->m_produk->getAll()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => null
@@ -57,17 +61,17 @@ class Admin extends CI_Controller {
 
 
 		frontEndAdmin("admin/view_data", $data);
-
 	}
 
-	function pengeluaran(){
+	function pengeluaran()
+	{
 
-		if($this->m_produk->getAll() != null){
+		if ($this->m_produk->getAll() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => $this->m_produk->getAll()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Data",
 				'data' => null
@@ -76,10 +80,10 @@ class Admin extends CI_Controller {
 
 
 		frontEndAdmin("admin/pengeluaran", $data);
-
 	}
 
-	function edit_data(){
+	function edit_data()
+	{
 		$id = $this->uri->segment(2);
 
 		$data = [
@@ -90,15 +94,16 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/edit_data", $data);
 	}
 
-	function transaction(){
+	function transaction()
+	{
 
 
-		if($this->m_produk->getPengeluaran() != null){
+		if ($this->m_produk->getPengeluaran() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Transaksi",
 				'data' => $this->m_produk->getPengeluaran()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Transaksi",
 				'data' => null
@@ -106,27 +111,27 @@ class Admin extends CI_Controller {
 		}
 
 		frontEndAdmin("admin/transaction", $data);
-		
 	}
 
-	function transaction_request(){
+	function transaction_request()
+	{
 
 
-		if($this->m_produk->getAllTransactionCO() != false){
-			if($this->m_produk->getRefund() != false){
+		if ($this->m_produk->getAllTransactionCO() != false) {
+			if ($this->m_produk->getRefund() != false) {
 				$data = [
 					'title' => "Dashboard | Lihat Transaksi",
 					'data' => $this->m_produk->getAllTransactionCO(),
 					'data_refund' => $this->m_produk->getRefund()
 				];
-			}else{
+			} else {
 				$data = [
 					'title' => "Dashboard | Lihat Transaksi",
 					'data' => $this->m_produk->getAllTransactionCO(),
 					'data_refund' => null
 				];
 			}
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Transaksi",
 				'data' => null
@@ -134,18 +139,18 @@ class Admin extends CI_Controller {
 		}
 
 		frontEndAdmin("admin/transaction_checkout", $data);
-		
 	}
 
-	function see_transaction_request($uuid){
+	function see_transaction_request($uuid)
+	{
 
 
-		if($this->m_produk->getDetailtransactionCO($uuid) != false){
+		if ($this->m_produk->getDetailtransactionCO($uuid) != false) {
 			$data = [
 				'title' => "Dashboard | Lihat Detail Transaksi",
 				'data' => $this->m_produk->getDetailtransactionCO($uuid)
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Detail Transaksi",
 				'data' => null
@@ -153,39 +158,42 @@ class Admin extends CI_Controller {
 		}
 
 		frontEndAdmin("admin/detail_transaction_checkout", $data);
-		
 	}
 
-	function konfirmasi($uuid){
-		if($uuid != null){
+	function konfirmasi($uuid)
+	{
+		if ($uuid != null) {
 			$this->m_produk->konfirmasi($uuid);
 			redirect("transaction_checkout");
 		}
 	}
 
-	function barangdikemas($uuid){
-		if($uuid != null){
+	function barangdikemas($uuid)
+	{
+		if ($uuid != null) {
 			$this->m_produk->barangdikemas($uuid);
 			redirect("transaction_checkout");
 		}
 	}
 
-	function barangdikirim($uuid){
-		if($uuid != null){
+	function barangdikirim($uuid)
+	{
+		if ($uuid != null) {
 			$this->m_produk->barangdikirim($uuid);
 			redirect("transaction_checkout");
 		}
 	}
 
-	function report(){
+	function report()
+	{
 
 
-		if($this->m_produk->getAllTransactionCO() != null){
+		if ($this->m_produk->getAllTransactionCO() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Laporan",
 				'data' => $this->m_produk->getAllTransactionCO()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Laporan",
 				'data' => null
@@ -193,16 +201,16 @@ class Admin extends CI_Controller {
 		}
 
 		frontEndAdmin("admin/report", $data);
-		
 	}
 
-	function report_per_year(){
-		if($this->m_produk->getPengeluaran_per_year() != null){
+	function report_per_year()
+	{
+		if ($this->m_produk->getPengeluaran_per_year() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Laporan Per Tahun",
 				'data' => $this->m_produk->getPengeluaran_per_year()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Laporan Per Tahun",
 				'data' => null
@@ -212,13 +220,14 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/report", $data);
 	}
 
-	function invoice(){
-		if($this->m_produk->getPengeluaran() != null){
+	function invoice()
+	{
+		if ($this->m_produk->getPengeluaran() != null) {
 			$data = [
 				'title' => "Dashboard | Invoice",
 				'data' => $this->m_produk->getPengeluaran()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Invoice",
 				'data' => null
@@ -229,13 +238,14 @@ class Admin extends CI_Controller {
 	}
 
 
-	function print_invoice(){
-		if($this->m_produk->getPengeluaran() != null){
+	function print_invoice()
+	{
+		if ($this->m_produk->getPengeluaran() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Pengeluaran",
 				'data' => $this->m_produk->getPengeluaran()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Pengeluaran",
 				'data' => null
@@ -245,13 +255,14 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/print_invoice', $data);
 	}
 
-	function print_invoice_per_year(){
-		if($this->m_produk->getPengeluaran_per_year() != null){
+	function print_invoice_per_year()
+	{
+		if ($this->m_produk->getPengeluaran_per_year() != null) {
 			$data = [
 				'title' => "Dashboard | Lihat Pengeluaran Per Tahun",
 				'data' => $this->m_produk->getPengeluaran_per_year()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Lihat Pengeluaran Per Tahun",
 				'data' => null
@@ -261,7 +272,8 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/print_invoice_per_tahun', $data);
 	}
 
-	function actAddProduct(){
+	function actAddProduct()
+	{
 		$this->form_validation->set_rules('kode_produk', 'Kode Produk', 'trim|required');
 		$this->form_validation->set_rules('nama_produk', 'Nama Produk', 'trim|required');
 		$this->form_validation->set_rules('harga_produk', 'Harga Produk', 'trim|required');
@@ -283,13 +295,13 @@ class Admin extends CI_Controller {
 			$this->upload->initialize($config);
 
 
-			if ( !$this->upload->do_upload("gambar") ){
+			if (!$this->upload->do_upload("gambar")) {
 				$error = array('error' => $this->upload->display_errors());
 				// $this->session->set_flashdata("infoFlashAdd", $error[0]);
 				// redirect("add_data");
 				var_dump($error);
 				die();
-			}else{
+			} else {
 				// $data = array('upload_data' => $this->upload->data());
 				$data = $this->upload->data();
 
@@ -310,15 +322,14 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('infoFlashAdd', 'Data berhasil di upload');
 				redirect("add_data");
 			}
-
 		} else {
 			$this->session->set_flashdata('infoFlashAdd', 'Isi semua bidang');
 			redirect("add_data");
 		}
-
 	}
 
-	function actEdit(){
+	function actEdit()
+	{
 		$this->form_validation->set_rules('kode_produk', 'Kode Produk', 'trim|required');
 		$this->form_validation->set_rules('nama_produk', 'Nama Produk', 'trim|required');
 		$this->form_validation->set_rules('harga_produk', 'Harga Produk', 'trim|required');
@@ -336,7 +347,7 @@ class Admin extends CI_Controller {
 			$this->upload->initialize($config);
 
 
-			if ( !$this->upload->do_upload("gambar") ){
+			if (!$this->upload->do_upload("gambar")) {
 				$upload = [
 					"kode_barang" => $this->input->post('kode_produk'),
 					"nama_barang" => $this->input->post('nama_produk'),
@@ -347,11 +358,10 @@ class Admin extends CI_Controller {
 					"gambar" => $this->input->post('gambar_old')
 				];
 
-				$this->m_produk->edit($this->input->post("id_barang"),$upload);
+				$this->m_produk->edit($this->input->post("id_barang"), $upload);
 				$this->session->set_flashdata('infoFlashAdd', 'Data berhasil di update');
 				redirect("view_data");
-
-			}else{
+			} else {
 				// $data = array('upload_data' => $this->upload->data());
 				$data = $this->upload->data();
 
@@ -365,18 +375,18 @@ class Admin extends CI_Controller {
 					"gambar" => $data['file_name']
 				];
 
-				$this->m_produk->edit($this->input->post("id_barang"),$upload);
+				$this->m_produk->edit($this->input->post("id_barang"), $upload);
 				$this->session->set_flashdata('infoFlashAdd', 'Data berhasil di update');
 				redirect("view_data");
 			}
-
 		} else {
 			$this->session->set_flashdata('infoFlashAdd', 'Isi semua bidang');
 			redirect("view_data");
 		}
 	}
 
-	function actPengeluaran(){
+	function actPengeluaran()
+	{
 		$kd_barang = $this->input->post("kd_brg");
 		$nama = $this->input->post("nama_produk_pengeluaran");
 		$harga = $this->input->post("harga_produk_pengeluaran");
@@ -387,7 +397,7 @@ class Admin extends CI_Controller {
 		// var_dump($kd_barang." ".$nama." ".$harga." ".$jml_pengeluaran." ".$tgl);
 		// die();
 
-		if(isset($nama) && $nama != "" && isset($harga) && $harga != "" && isset($jml_pengeluaran) && $jml_pengeluaran != "" && isset($tgl) && $tgl != ""){
+		if (isset($nama) && $nama != "" && isset($harga) && $harga != "" && isset($jml_pengeluaran) && $jml_pengeluaran != "" && isset($tgl) && $tgl != "") {
 
 			$data = [
 				'kode_barang' => $kd_barang,
@@ -401,27 +411,28 @@ class Admin extends CI_Controller {
 			$this->m_produk->insertPengeluaran($data);
 			$this->session->set_flashdata('infoPengeluaran', 'Data berhasil di tambahkan ke tabel pengeluaran');
 			redirect("pengeluaran");
-		}else{
+		} else {
 			$this->session->set_flashdata('infoPengeluaran', 'Mohon isi semua bidang yang ada');
 			redirect("pengeluaran");
 		}
-
 	}
 
-	function delete(){
+	function delete()
+	{
 		$this->db->delete('data_barang', array('id_barang' => $this->uri->segment(2)));
 		$this->session->set_flashdata('infoFlashAdd', 'Data berhasil di Hapus');
 		redirect("view_data");
 	}
 
-	function chat_home(){
-		if($this->m_chat->getAllUsers() != null){
+	function chat_home()
+	{
+		if ($this->m_chat->getAllUsers() != null) {
 			$data = [
 				'title' => "Dashboard | Chat Home",
 				'data' => $this->m_chat->getAllUsers(),
 				'notif' => $this->m_chat->getNotifphp($this->session->userdata['admin_logged']['id_user'])
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Chat Home",
 				'data' => null
@@ -431,17 +442,18 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/home_chat", $data);
 	}
 
-	function openChat($id, $status){
-		if($status == "dibaca"){
+	function openChat($id, $status)
+	{
+		if ($status == "dibaca") {
 			$this->m_chat->updateStatus($id, $status);
-			redirect(redirect(base_url("ochat/".$id."/null")));
+			redirect(redirect(base_url("ochat/" . $id . "/null")));
 		}
-		if($this->m_chat->getAllChatAdmin($id) != null){
+		if ($this->m_chat->getAllChatAdmin($id) != null) {
 			$data = [
 				'title' => "Dashboard | Chat Home",
 				'data' => $this->m_chat->getAllChatAdmin($id)
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "Dashboard | Chat Home",
 				'data' => null
@@ -451,10 +463,9 @@ class Admin extends CI_Controller {
 		frontEndAdmin("admin/open_chat", $data);
 	}
 
-	function updateNotifAjax(){
-
+	function updateNotifAjax()
+	{
 	}
-
 }
 
 /* End of file Admin.php */

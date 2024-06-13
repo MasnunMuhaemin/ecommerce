@@ -11,7 +11,7 @@
 							<h3 class="card-title">Pengeluaran Produk</h3><br>
 							<p class="text-warning"><?= $this->session->flashdata('infoPengeluaran'); ?></p>
 						</div>
-						
+
 						<form action="<?= base_url("actPengeluaran") ?>" method="post">
 							<div class="card-body">
 								<div class="input-group mb-3">
@@ -20,9 +20,11 @@
 									</div>
 									<select class="custom-select kd_brg" id="inputGroupSelect01" name="kd_brg">
 										<option selected>Kode Produk</option>
-										<?php if($data != null){ foreach($data as $val){ ?>
-										<option value="<?= $val->kode_barang ?>" data-harga="<?= $val->harga_barang ?>" data-produk="<?= $val->nama_barang ?>"><?= $val->kode_barang ?></option>
-										<?php }} ?>
+										<?php if ($data != null) {
+											foreach ($data as $val) { ?>
+												<option value="<?= $val->kode_barang ?>" data-harga="<?= $val->harga_barang ?>" data-produk="<?= $val->nama_barang ?>"><?= $val->kode_barang ?></option>
+										<?php }
+										} ?>
 									</select>
 								</div>
 								<div class="form-group">
@@ -59,7 +61,7 @@
 										</div>
 									</div>
 								</div> -->
-								
+
 							</div>
 							<div class="card-footer">
 								<button type="submit" class="btn btn-primary">Submit</button>
@@ -73,7 +75,6 @@
 </div>
 
 <script type="text/javascript">
-
 	let kode_barang = document.querySelector(".kd_brg")
 	let nama_barang = document.querySelector(".nm_brg")
 	let stok = document.querySelector(".stok")
@@ -88,6 +89,4 @@
 	stok.addEventListener("keyup", () => {
 		ttl_pengeluaran.value = parseInt(stok.value) * parseInt(hrg_brg.value)
 	})
-
 </script>
-

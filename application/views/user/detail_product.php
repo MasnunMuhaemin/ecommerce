@@ -12,17 +12,18 @@
 
 <section class="why_section layout_padding">
 	<div class="container">
-		
-		<div class="row">
-			<?php if($data != null){ foreach($data as $val){ ?>
-				<div class="col-md-8">
-					<div class="box">
-						<div class="img-box">
-							<img src="<?= base_url("assets/uploads/foto_produk/".$val->gambar) ?>" alt="<?= $val->nama_barang ?>" class="w-100">
-						</div>
 
-					</div>
-					<!-- <div class="detail-box">
+		<div class="row">
+			<?php if ($data != null) {
+				foreach ($data as $val) { ?>
+					<div class="col-md-8">
+						<div class="box">
+							<div class="img-box">
+								<img src="<?= base_url("assets/uploads/foto_produk/" . $val->gambar) ?>" alt="<?= $val->nama_barang ?>" class="w-100">
+							</div>
+
+						</div>
+						<!-- <div class="detail-box">
 						<h5>
 							<?= $val->nama_barang ?>
 							<p></p>
@@ -31,12 +32,14 @@
 							<?= $val->deskripsi ?>
 						</p>
 					</div> -->
-				</div>
-			<?php }} ?>
-			<?php if($data != null){ foreach($data as $val){ ?>
-				<div class="col-md-4">
-					<div class="box ">
-					<!-- <div class="img-box">
+					</div>
+			<?php }
+			} ?>
+			<?php if ($data != null) {
+				foreach ($data as $val) { ?>
+					<div class="col-md-4">
+						<div class="box ">
+							<!-- <div class="img-box">
 						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.667 490.667" style="enable-background:new 0 0 490.667 490.667;" xml:space="preserve">
 							<g>
 								<g>
@@ -139,88 +142,91 @@
 							</g>
 						</svg>
 					</div> -->
-					<div class="detail-box">
-						<h5 class="text-left">
-							<?= $val->nama_barang ?>
-						</h5>
-						<p class="text-left">
-							Rp. <?= number_format($val->harga_barang) ?>
-						</p>
-						<p class="text-left">Stock: <?= $val->stok_barang ?></p>
-						<p class="text-left">
-							<?= $val->deskripsi ?>
-						</p>
-						<p class="text-left">Jumlah Pesanan: <input id="jml_pesan" type="number" class="form-control" value="1" min="1" max="<?= $val->stok_barang ?>"></p>
-						<button id="dataproduk" class="btn-bg-salmon" data-idproduk="<?= $val->id_barang ?>" data-namaproduk="<?= $val->nama_barang ?>" data-hargaproduk="<?= $val->harga_barang ?>" data-stok="<?= $val->stok_barang ?>" data-image="<?= $val->gambar ?>">Tambah Keranjang</button>
+							<div class="detail-box">
+								<h5 class="text-left">
+									<?= $val->nama_barang ?>
+								</h5>
+								<p class="text-left">
+									Rp. <?= number_format($val->harga_barang) ?>
+								</p>
+								<p class="text-left">Stock: <?= $val->stok_barang ?></p>
+								<p class="text-left">
+									<?= $val->deskripsi ?>
+								</p>
+								<p class="text-left">Jumlah Pesanan: <input id="jml_pesan" type="number" class="form-control" value="1" min="1" max="<?= $val->stok_barang ?>"></p>
+								<button id="dataproduk" class="btn-bg-salmon" data-idproduk="<?= $val->id_barang ?>" data-namaproduk="<?= $val->nama_barang ?>" data-hargaproduk="<?= $val->harga_barang ?>" data-stok="<?= $val->stok_barang ?>" data-image="<?= $val->gambar ?>">Tambah Keranjang</button>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-		<?php }} ?>
+			<?php }
+			} ?>
+		</div>
 	</div>
-</div>
 </section>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('#dataproduk').click(function(){
-			var product_id    = $(this).data("idproduk");
-			var product_name  = $(this).data("namaproduk");
+	$(document).ready(function() {
+		$('#dataproduk').click(function() {
+			var product_id = $(this).data("idproduk");
+			var product_name = $(this).data("namaproduk");
 			var product_price = $(this).data("hargaproduk");
-			var quantity      = $("#jml_pesan").val();
-			var stok 		  = $(this).data("stok")
-			var image         = $(this).data("image")
+			var quantity = $("#jml_pesan").val();
+			var stok = $(this).data("stok")
+			var image = $(this).data("image")
 			console.log(stok)
-			if(parseInt($("#jml_pesan").val()) != -1 && parseInt($("#jml_pesan").val()) != 0){
+			if (parseInt($("#jml_pesan").val()) != -1 && parseInt($("#jml_pesan").val()) != 0) {
 				if ($("#jml_pesan").val() <= parseInt(stok)) {
 					$.ajax({
-						url : "<?= site_url('add_to_cart');?>",
-						method : "POST",
-						data : {
-							product_id: product_id, 
-							product_name: product_name, 
+						url: "<?= site_url('add_to_cart'); ?>",
+						method: "POST",
+						data: {
+							product_id: product_id,
+							product_name: product_name,
 							product_price: product_price,
 							quantity: quantity,
 							image: image
 						},
-						success: function(data){
+						success: function(data) {
 							$('#tbody').html(data);
 							// alert("Berhasil ditambahkan ke keranjang")
 							location.reload()
 						}
 					});
-				}else{
-					alert("Maaf Stok Barang Tersisa : "+stok)
+				} else {
+					alert("Maaf Stok Barang Tersisa : " + stok)
 				}
-				
-			}else{
+
+			} else {
 				alert("Mohon Isi Data Dengan Benar")
 			}
 
 		});
 
-		$('#tbody').load("<?php echo site_url('load_cart');?>");
+		$('#tbody').load("<?php echo site_url('load_cart'); ?>");
 
-		$(document).on('click','.hapus_cart',function(){
-			var row_id=$(this).attr("id"); 
+		$(document).on('click', '.hapus_cart', function() {
+			var row_id = $(this).attr("id");
 			$.ajax({
-				url : "<?php echo site_url('delete_cart');?>",
-				method : "POST",
-				data : {row_id : row_id},
-				success :function(data){
+				url: "<?php echo site_url('delete_cart'); ?>",
+				method: "POST",
+				data: {
+					row_id: row_id
+				},
+				success: function(data) {
 					$('#tbody').html(data);
 				}
 			});
 		});
 
-		$(document).on("change", ".product_qty", function(){
+		$(document).on("change", ".product_qty", function() {
 			$.ajax({
-				url : "<?php echo site_url('update_cart');?>",
-				method : "POST",
-				data : {
-					row_id : $(this).data("rowid"),
+				url: "<?php echo site_url('update_cart'); ?>",
+				method: "POST",
+				data: {
+					row_id: $(this).data("rowid"),
 					qty: $(this).val()
 				},
-				success :function(data){
+				success: function(data) {
 					$('#tbody').html(data);
 				}
 			});
@@ -241,99 +247,99 @@
 		// 	console.log(text)
 		// })
 
-		$("#btn_send_wa").click(()=>{
-      let _data = []
-      let uuid_co = rand(10)
-      let alamat_penerima = $("#alamat_pemesan").val()
-      let no_telp = $("#info_modal_no_penerima").html()
-      let srcPembayaran = document.querySelector("#buktiInputPembayaran")
-      $.map($("#data_table_tr > #data_table_text_product"), function (elem, index){
-         _data[index] = {
-            id_barang: elem.getAttribute("data-id_produk"),
-            product: elem.getAttribute("data-textproduct"),
-            banyak: elem.getAttribute("data-banyakproduk"),
-            harga: elem.getAttribute("data-hargaperitem"),
-            image: elem.getAttribute("data-image"),
-            ukuran: elem.getAttribute("data-ukuran"),
-            model: elem.getAttribute("data-model"),
-            bahan: elem.getAttribute("data-bahan"),
-            provinsi: $("#provinsi").data("provinsi"),
-            kota: $("#kota").data("kota"),
-            ekspedisi: $("#ekspedisi").data("ekspedisi"),
-            ongkir: $("#ongkir").data("ongkir")
-         }
-      })
+		$("#btn_send_wa").click(() => {
+			let _data = []
+			let uuid_co = rand(10)
+			let alamat_penerima = $("#alamat_pemesan").val()
+			let no_telp = $("#info_modal_no_penerima").html()
+			let srcPembayaran = document.querySelector("#buktiInputPembayaran")
+			$.map($("#data_table_tr > #data_table_text_product"), function(elem, index) {
+				_data[index] = {
+					id_barang: elem.getAttribute("data-id_produk"),
+					product: elem.getAttribute("data-textproduct"),
+					banyak: elem.getAttribute("data-banyakproduk"),
+					harga: elem.getAttribute("data-hargaperitem"),
+					image: elem.getAttribute("data-image"),
+					ukuran: elem.getAttribute("data-ukuran"),
+					model: elem.getAttribute("data-model"),
+					bahan: elem.getAttribute("data-bahan"),
+					provinsi: $("#provinsi").data("provinsi"),
+					kota: $("#kota").data("kota"),
+					ekspedisi: $("#ekspedisi").data("ekspedisi"),
+					ongkir: $("#ongkir").data("ongkir")
+				}
+			})
 
-      console.log(_data)
+			console.log(_data)
 
-      let data = JSON.stringify(_data)
+			let data = JSON.stringify(_data)
 
-      sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
+			sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
 
-   })
-   
+		})
 
-   function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
-      var xhr = new XMLHttpRequest();
-      var url = "http://localhost/app/co/";
 
-      let form = new FormData()
+		function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost/app/co/";
 
-      form.append("uuid", uuid_co)
-      form.append("data", _data)
-      form.append("alamat", alamat_penerima)
-      form.append("no_telp", no_telp)
-      // form.append("gambarPembayaran", srcPembayaran.files)
-      jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
-          form.append('gambarPembayaran', file);
-      });
+			let form = new FormData()
 
-      let formData = new FormData();
-      fetch('http://localhost/app/co/', {
-          method:"POST",
-          body: form
-      })
-      .then(response =>{
-          response.text()
-          .then(data => {
-               let alertData = data
-               if(alertData == "tidak bisa checkout karena stok terbatastrue"){
-                  let newAlert = alertData.substring(0, alertData.indexOf("true"));
-                  alert(newAlert)
-                  location.reload()
-               }
-               if(data == true || data == "true"){
-                  let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
-                  if(id_userss != null || id_userss != "" || id_userss != 0){
-                     window.location.replace("<?= base_url('riwayat/'.$this->session->userdata('user_logged')['id_user']) ?>")
-                  }else{
-                     alert("Silahkan login terlebih dahulu")
-                  }
-               }
-          })
-      })
+			form.append("uuid", uuid_co)
+			form.append("data", _data)
+			form.append("alamat", alamat_penerima)
+			form.append("no_telp", no_telp)
+			// form.append("gambarPembayaran", srcPembayaran.files)
+			jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
+				form.append('gambarPembayaran', file);
+			});
 
-      return false;
-  }
+			let formData = new FormData();
+			fetch('http://localhost/app/co/', {
+					method: "POST",
+					body: form
+				})
+				.then(response => {
+					response.text()
+						.then(data => {
+							let alertData = data
+							if (alertData == "tidak bisa checkout karena stok terbatastrue") {
+								let newAlert = alertData.substring(0, alertData.indexOf("true"));
+								alert(newAlert)
+								location.reload()
+							}
+							if (data == true || data == "true") {
+								let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
+								if (id_userss != null || id_userss != "" || id_userss != 0) {
+									window.location.replace("<?= base_url('riwayat/' . $this->session->userdata('user_logged')['id_user']) ?>")
+								} else {
+									alert("Silahkan login terlebih dahulu")
+								}
+							}
+						})
+				})
 
-   const rupiah = (number)=>{
-     return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR"
-    }).format(number);
-   }
+			return false;
+		}
 
-  const rand = length => {
-      let result = '';
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charactersLength = characters.length;
-      let counter = 0;
-      while (counter < length) {
-         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-         counter += 1;
-      }
-      return result;
-  }
+		const rupiah = (number) => {
+			return new Intl.NumberFormat("id-ID", {
+				style: "currency",
+				currency: "IDR"
+			}).format(number);
+		}
+
+		const rand = length => {
+			let result = '';
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			const charactersLength = characters.length;
+			let counter = 0;
+			while (counter < length) {
+				result += characters.charAt(Math.floor(Math.random() * charactersLength));
+				counter += 1;
+			}
+			return result;
+		}
 
 	})
 </script>

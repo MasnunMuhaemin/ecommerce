@@ -1,26 +1,29 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_Chat extends CI_Model {
+class M_Chat extends CI_Model
+{
 
-	public function userSenderInstant($data){
+	public function userSenderInstant($data)
+	{
 		$insert = $this->db->insert('chat', $data);
 		if ($insert) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	public function userSender(){
-		
+	public function userSender()
+	{
 	}
 
-	public function adminSender(){
-		
+	public function adminSender()
+	{
 	}
 
-	public function getAllChat($id){
+	public function getAllChat($id)
+	{
 		$query = "id_sender = '$id' OR id_receive = '$id'";
 
 		// $data = $this->db->get('chat');
@@ -29,15 +32,15 @@ class M_Chat extends CI_Model {
 		// }else{
 		// 	return false;
 		// }
-		$check = $this->db->get_where('chat',$query);
+		$check = $this->db->get_where('chat', $query);
 		if ($check->num_rows() > 0) {
 			// $result_query = $check->row();
 			// if (password_verify($password, $result_query->password)) {
-				echo json_encode($check->result_object());
+			echo json_encode($check->result_object());
 			// }else{
-				// return false;
+			// return false;
 			// }
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -46,8 +49,9 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	function getNotif($id){
-		$query="id_receive = '$id' AND status = 'Belum dibaca'";
+	function getNotif($id)
+	{
+		$query = "id_receive = '$id' AND status = 'Belum dibaca'";
 		$check = $this->db->get_where('chat', $query);
 		if ($check->num_rows() > 0) {
 			$result_query = $check->result_object();
@@ -55,7 +59,7 @@ class M_Chat extends CI_Model {
 			// if ($result_query->id_receive == $id && $result_query->status == "Belum dibaca") {
 			// 	echo json_encode($check->num_rows());
 			// }
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -64,7 +68,8 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	public function getAllChatAdminAPI($id, $id_receive){
+	public function getAllChatAdminAPI($id, $id_receive)
+	{
 		$query = "id_sender = '$id_receive' OR id_receive = '$id' AND id_sender = '$id' OR id_receive = '$id_receive'";
 
 		// $data = $this->db->get('chat');
@@ -73,15 +78,15 @@ class M_Chat extends CI_Model {
 		// }else{
 		// 	return false;
 		// }
-		$check = $this->db->get_where('chat',$query);
+		$check = $this->db->get_where('chat', $query);
 		if ($check->num_rows() > 0) {
 			// $result_query = $check->row();
 			// if (password_verify($password, $result_query->password)) {
-				echo json_encode($check->result_object());
+			echo json_encode($check->result_object());
 			// }else{
-				// return false;
+			// return false;
 			// }
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -90,12 +95,13 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	public function getAllChatAdmin($id){
+	public function getAllChatAdmin($id)
+	{
 		$query = "id_sender = '$id' OR id_receive = '$id'";
-		$check = $this->db->get_where('chat',$query);
+		$check = $this->db->get_where('chat', $query);
 		if ($check->num_rows() > 0) {
 			return $check->result_object();
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -104,13 +110,14 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	public function getAllUsers(){
+	public function getAllUsers()
+	{
 		// $query = "id_sender = '$id' OR id_receive = '$id'";
 		// $check = $this->db->get_where('chat',$query);
 		$get = $this->db->get('users');
 		if ($get->num_rows() > 0) {
 			return $get->result_object();
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -119,7 +126,8 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	function getNotifphp($id){
+	function getNotifphp($id)
+	{
 		$check = $this->db->get('vw_notif');
 		if ($check->num_rows() > 0) {
 			$result_query = $check->result_object();
@@ -128,7 +136,7 @@ class M_Chat extends CI_Model {
 			// if ($result_query->id_receive == $id && $result_query->status == "Belum dibaca") {
 			// 	echo json_encode($check->num_rows());
 			// }
-		}else{
+		} else {
 			$data = [
 				'code' => 404,
 				"message" => "Belum ada pesan"
@@ -137,16 +145,16 @@ class M_Chat extends CI_Model {
 		}
 	}
 
-	function updateStatus($id, $status){
+	function updateStatus($id, $status)
+	{
 		$data = [
 			'status' => $status
 		];
 
 		$this->db->set($data);
-		$this->db->where("id_sender", $id)->or_where("id_receive",$id);
+		$this->db->where("id_sender", $id)->or_where("id_receive", $id);
 		$this->db->update('chat');
 	}
-
 }
 
 /* End of file M_Chat.php */

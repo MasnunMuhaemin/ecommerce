@@ -1,37 +1,40 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_Auth extends CI_Model {
+class M_Auth extends CI_Model
+{
 
-	function register($data){
+	function register($data)
+	{
 		if ($this->db->insert('users', $data)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function login($email, $password){
+	function login($email, $password)
+	{
 		$check = $this->db->get_where('vw_users', ['email' => $email]);
 		if ($check->num_rows() > 0) {
 			$result_query = $check->row();
 			if (password_verify($password, $result_query->password)) {
 				return $check->result_object();
-			}else{
+			} else {
 				return false;
 			}
 		}
 	}
 
-	function checkEmail($email){
+	function checkEmail($email)
+	{
 		$check = $this->db->get_where('vw_users', ['email' => $email]);
-		if($check->num_rows() > 0){
+		if ($check->num_rows() > 0) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
-
 }
 
 /* End of file M_Auth.php */

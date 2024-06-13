@@ -1,8 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 date_default_timezone_set('Asia/Jakarta');
-class Chat extends CI_Controller {
+class Chat extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -10,17 +11,18 @@ class Chat extends CI_Controller {
 		$this->load->model('M_Chat', "m_chat");
 	}
 
-	public function userSenderInstant(){
+	public function userSenderInstant()
+	{
 
-		if($_SERVER['REQUEST_METHOD'] == "POST"){
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$data = file_get_contents("php://input");
-			
-			if($data == "" || $data == null){
+
+			if ($data == "" || $data == null) {
 				echo "mohon di isi";
-			}else{
+			} else {
 				$row = json_decode($data, true);
-				if($row['nama'] != "" && $row['msg'] != "" && $row['status'] !== ""){
+				if ($row['nama'] != "" && $row['msg'] != "" && $row['status'] !== "") {
 					$idSender = (int)$this->session->userdata("user_logged")['id_user'];
 					$idReceive = 1;
 					$nama = $row['nama'];
@@ -36,10 +38,10 @@ class Chat extends CI_Controller {
 						'time' => date("Y-m-d H:i:s")
 					];
 
-					if($this->m_chat->userSenderInstant($data)){
+					if ($this->m_chat->userSenderInstant($data)) {
 						// redirect($_SERVER["HTTP_REFERER"]);
 						echo "console.log('berhasil')";
-					}else{
+					} else {
 						echo "console.log('gagal kirim')";
 					}
 				}
@@ -49,7 +51,8 @@ class Chat extends CI_Controller {
 		}
 	}
 
-	public function userSender(){
+	public function userSender()
+	{
 		$config['upload_path'] = './assets/uploads/buktiTF';
 		$config['allowed_types'] = 'jpg|png|img';
 		// $config['max_size']  = '10000';
@@ -58,7 +61,7 @@ class Chat extends CI_Controller {
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
 
-		if ( !$this->upload->do_upload('file') ){
+		if (!$this->upload->do_upload('file')) {
 			$upload = [
 				'id_receive' => 1,
 				'id_sender' => $this->session->userdata('user_logged')['id_user'],
@@ -68,12 +71,12 @@ class Chat extends CI_Controller {
 				'time' => date('Y-m-d H:i:s'),
 			];
 
-			if($this->m_chat->userSenderInstant($upload)){
+			if ($this->m_chat->userSenderInstant($upload)) {
 				echo "Pesan berhasil di kirim";
-			}else{
+			} else {
 				echo "Pesan gagal di kirim";
 			}
-		}else{
+		} else {
 			// $data = array('upload_data' => $this->upload->data());
 			$data = $this->upload->data();
 			$upload = [
@@ -86,37 +89,42 @@ class Chat extends CI_Controller {
 				'time' => date("Y-m-d H:i:s"),
 			];
 
-			if($this->m_chat->userSenderInstant($upload)){
+			if ($this->m_chat->userSenderInstant($upload)) {
 				echo "Pesan berhasil di kirim";
-			}else{
+			} else {
 				echo "Pesan gagal di kirim";
 			}
 		}
 	}
 
-	public function uploadImage(){
+	public function uploadImage()
+	{
 		$file = $_FILES['file']['name'];
-		echo "<script>console.log(".$file.")</script>";
+		echo "<script>console.log(" . $file . ")</script>";
 	}
 
 
-	public function getAllChat(){
+	public function getAllChat()
+	{
 		$id_user = $this->session->userdata('user_logged')['id_user'];
 		$this->m_chat->getAllChat($id_user);
 	}
 
-	public function getNotif($id){
+	public function getNotif($id)
+	{
 		$this->m_chat->getNotif($id);
 	}
 
-	public function getAllChatAdminAPI($id_receive){
+	public function getAllChatAdminAPI($id_receive)
+	{
 		$id_user = $this->session->userdata('admin_logged')['id_user'];
 		$this->m_chat->getAllChatAdminAPI($id_user, $id_receive);
 	}
-	
 
-	public function adminSender(){
-		$config['upload_path'] = FCPATH.'/assets/uploads/buktiTF';
+
+	public function adminSender()
+	{
+		$config['upload_path'] = FCPATH . '/assets/uploads/buktiTF';
 		$config['allowed_types'] = 'jpg|png|img';
 		// $config['max_size']  = '10000';
 		// $config['max_width']  = '1024';
@@ -124,7 +132,7 @@ class Chat extends CI_Controller {
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
 
-		if ( !$this->upload->do_upload('file') ){
+		if (!$this->upload->do_upload('file')) {
 			$upload = [
 				'id_receive' => $this->input->post("id_user"),
 				'id_sender' => $this->session->userdata('admin_logged')['id_user'],
@@ -134,12 +142,12 @@ class Chat extends CI_Controller {
 				'time' => date("Y-m-d H:i:s"),
 			];
 
-			if($this->m_chat->userSenderInstant($upload)){
+			if ($this->m_chat->userSenderInstant($upload)) {
 				redirect($_SERVER["HTTP_REFERER"]);
-			}else{
+			} else {
 				echo "Pesan gagal di kirim";
 			}
-		}else{
+		} else {
 			// $data = array('upload_data' => $this->upload->data());
 			$data = $this->upload->data();
 			$upload = [
@@ -152,32 +160,33 @@ class Chat extends CI_Controller {
 				'time' => date("Y-m-d H:i:s"),
 			];
 
-			if($this->m_chat->userSenderInstant($upload)){
+			if ($this->m_chat->userSenderInstant($upload)) {
 				redirect($_SERVER["HTTP_REFERER"]);
-			}else{
+			} else {
 				echo "Pesan gagal di kirim";
 			}
 		}
 	}
 
-	public function updateNotifAjax(){
-		if($_SERVER['REQUEST_METHOD'] == "POST"){
+	public function updateNotifAjax()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 			$data = file_get_contents("php://input");
 
 			echo json_encode($data);
-			
-			if($data == "" || $data == null){
+
+			if ($data == "" || $data == null) {
 				echo "Mohon di isi";
-			}else{
+			} else {
 				$row = json_decode($data, true);
-				if($row['id'] != "" && $row['status'] != ""){
+				if ($row['id'] != "" && $row['status'] != "") {
 					$id = $row['id'];
 					$status = $row['status'];
-					if($this->m_chat->updateStatus($id, $status)){
+					if ($this->m_chat->updateStatus($id, $status)) {
 						// redirect($_SERVER["HTTP_REFERER"]);
 						echo "console.log('berhasil')";
-					}else{
+					} else {
 						echo "console.log('gagal kirim')";
 					}
 				}
@@ -187,12 +196,12 @@ class Chat extends CI_Controller {
 		}
 	}
 
-	function deleteChat($id){
+	function deleteChat($id)
+	{
 		$query = "id_sender = '$id' OR id_receive = '$id'";
 		$this->db->delete('chat', $query);
 		redirect("home-chat-admin", "refresh");
 	}
-
 }
 
 /* End of file Chat.php */

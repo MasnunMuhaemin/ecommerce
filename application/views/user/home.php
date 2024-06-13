@@ -1,34 +1,34 @@
 <!-- slider section -->
 
 <section class="slider_section ">
-            <div class="slider_bg_box">
-               <img src="<?= base_url("assets/images/slider-bg.jpg") ?>" alt="">
-            </div>
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="container ">
-                        <div class="row">
-                           <div class="col-md-7 col-lg-6 ">
-                              <div class="detail-box">
-                                 <h1>
-                                    <span>
-                                    Selamat Datang
-                                    </span>
-                                    <p style="font-size: 54px; margin: 0;">& <br>Selamat Berbelanja</p>
-                                 </h1>
-                                 <p>
-                                    Toko Wardani Collection menyediakan berbagai jenis pakaian dewasa.
-                                 </p>
-                                 <div class="btn-box">
-                                    <a href="" class="btn1">Shop Now</a>
-                                 </div>
-                              </div>
-                           </div>
+   <div class="slider_bg_box">
+      <img src="<?= base_url("assets/images/slider-bg.jpg") ?>" alt="">
+   </div>
+   <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+         <div class="carousel-item active">
+            <div class="container ">
+               <div class="row">
+                  <div class="col-md-7 col-lg-6 ">
+                     <div class="detail-box">
+                        <h1>
+                           <span>
+                              Selamat Datang
+                           </span>
+                           <p style="font-size: 54px; margin: 0;">& <br>Selamat Berbelanja</p>
+                        </h1>
+                        <p>
+                           Toko Wardani Collection menyediakan berbagai jenis pakaian dewasa.
+                        </p>
+                        <div class="btn-box">
+                           <a href="" class="btn1">Shop Now</a>
                         </div>
                      </div>
                   </div>
-                  <!-- <div class="carousel-item ">
+               </div>
+            </div>
+         </div>
+         <!-- <div class="carousel-item ">
                      <div class="container ">
                         <div class="row">
                            <div class="col-md-7 col-lg-6 ">
@@ -78,16 +78,16 @@
                         </div>
                      </div>
                   </div> -->
-               </div>
-               <!-- <div class="container">
+      </div>
+      <!-- <div class="container">
                   <ol class="carousel-indicators">
                      <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
                      <li data-target="#customCarousel1" data-slide-to="1"></li>
                      <li data-target="#customCarousel1" data-slide-to="2"></li>
                   </ol>
                </div> -->
-            </div>
-         </section>
+   </div>
+</section>
 <!-- end slider section -->
 </div>
 
@@ -373,96 +373,97 @@
       <div class="heading_container heading_center">
          <h2 id="shopNow">
             Rekomendasi <span>Produk</span>
-            </h2>
+         </h2>
       </div>
       <div class="row">
          <input type="hidden" id="ls">
-         
-         <?php 
-            $no=0;
-               if($this->session->userdata('user_logged') && $data_recommend > 0){
-                  foreach($data_recommend as $dat){
-                     if($dat != false){
-
-                     foreach($dat as $dats){
-                        error_reporting(0);
-
-               
-         ?>
-            <div class="col-sm-6 col-md-4 col-lg-4">
-               <div class="box">
-                  <div class="option_container">
-                     <div class="options">
-                        <a href="#!" id="add_to_cart" class="option1" data-idproduk="<?= $dats->id_barang ?>" data-namaproduk="<?= $dats->nama_barang ?>" data-hargaproduk="<?= $dats->harga_barang ?>" data-bahan="<?= $dats->bahan ?>" data-model="<?= $dats->model ?>" data-ukuran="<?= $dats->ukuran ?>" data-srcImg="<?= $dats->gambar ?>">
-                           Add To Cart
-                        </a>
-                        <!-- <a href="#" class="option2">
-                           Buy Now
-                        </a> -->
-                        <a href="<?= base_url('detailproduk/'.$dats->id_barang); ?>" class="option2">
-                           Detail Produk
-                        </a>
-                     </div>
-                  </div>
-                  <div class="img-box">
-                     <img src="<?= base_url("assets/uploads/foto_produk/") ?><?= $dats->gambar ?>" alt="">
-                  </div>
-                  <div class="detail-box">
-                     <h5>
-                        <?= $dats->nama_barang; ?>
-                     </h5>
-                     <h6>Rp.
-                        <?= number_format($dats->harga_barang) ?>
-                     </h6>
-                     
-                  </div>
-               </div>
-            </div>
-         <?php
-               }}
-            }
-         }else if($data_recommend == null || $data_recommend == 0){
-            echo var_dump($data_recommend);
-            foreach($data as $datas){
-         ?>
-
-            <div class="col-sm-6 col-md-4 col-lg-4">
-               <div class="box">
-                  <div class="option_container">
-                     <div class="options">
-                        <a href="#!" id="add_to_cart" class="option1" data-idproduk="<?= $datas->id_barang ?>" data-namaproduk="<?= $datas->nama_barang ?>" data-hargaproduk="<?= $datas->harga_barang ?>" data-bahan="<?= $datas->bahan ?>" data-model="<?= $datas->model ?>" data-ukuran="<?= $datas->ukuran ?>" data-srcImg="<?= $datas->gambar ?>">
-                           Add To Cart
-                        </a>
-                        <!-- <a href="#" class="option2">
-                           Buy Now
-                        </a> -->
-                        <a href="<?= base_url('detailproduk/'.$datas->id_barang); ?>" class="option2">
-                           Detail Produk
-                        </a>
-                     </div>
-                  </div>
-                  <div class="img-box">
-                     <img src="<?= base_url("assets/uploads/foto_produk/") ?><?= $datas->gambar ?>" alt="">
-                  </div>
-                  <div class="detail-box">
-                     <h5>
-                        <?= $datas->nama_barang; ?>
-                     </h5>
-                     <h6>Rp.
-                        <?= number_format($datas->harga_barang) ?>
-                     </h6>
-                     
-                  </div>
-               </div>
-            </div>
 
          <?php
+         $no = 0;
+         if ($this->session->userdata('user_logged') && $data_recommend > 0) {
+            foreach ($data_recommend as $dat) {
+               if ($dat != false) {
+
+                  foreach ($dat as $dats) {
+                     error_reporting(0);
+
+
+         ?>
+                     <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="box">
+                           <div class="option_container">
+                              <div class="options">
+                                 <a href="#!" id="add_to_cart" class="option1" data-idproduk="<?= $dats->id_barang ?>" data-namaproduk="<?= $dats->nama_barang ?>" data-hargaproduk="<?= $dats->harga_barang ?>" data-bahan="<?= $dats->bahan ?>" data-model="<?= $dats->model ?>" data-ukuran="<?= $dats->ukuran ?>" data-srcImg="<?= $dats->gambar ?>">
+                                    Add To Cart
+                                 </a>
+                                 <!-- <a href="#" class="option2">
+                           Buy Now
+                        </a> -->
+                                 <a href="<?= base_url('detailproduk/' . $dats->id_barang); ?>" class="option2">
+                                    Detail Produk
+                                 </a>
+                              </div>
+                           </div>
+                           <div class="img-box">
+                              <img src="<?= base_url("assets/uploads/foto_produk/") ?><?= $dats->gambar ?>" alt="">
+                           </div>
+                           <div class="detail-box">
+                              <h5>
+                                 <?= $dats->nama_barang; ?>
+                              </h5>
+                              <h6>Rp.
+                                 <?= number_format($dats->harga_barang) ?>
+                              </h6>
+
+                           </div>
+                        </div>
+                     </div>
+               <?php
+                  }
                }
             }
+         } else if ($data_recommend == null || $data_recommend == 0) {
+            echo var_dump($data_recommend);
+            foreach ($data as $datas) {
+               ?>
+
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a href="#!" id="add_to_cart" class="option1" data-idproduk="<?= $datas->id_barang ?>" data-namaproduk="<?= $datas->nama_barang ?>" data-hargaproduk="<?= $datas->harga_barang ?>" data-bahan="<?= $datas->bahan ?>" data-model="<?= $datas->model ?>" data-ukuran="<?= $datas->ukuran ?>" data-srcImg="<?= $datas->gambar ?>">
+                              Add To Cart
+                           </a>
+                           <!-- <a href="#" class="option2">
+                           Buy Now
+                        </a> -->
+                           <a href="<?= base_url('detailproduk/' . $datas->id_barang); ?>" class="option2">
+                              Detail Produk
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="<?= base_url("assets/uploads/foto_produk/") ?><?= $datas->gambar ?>" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           <?= $datas->nama_barang; ?>
+                        </h5>
+                        <h6>Rp.
+                           <?= number_format($datas->harga_barang) ?>
+                        </h6>
+
+                     </div>
+                  </div>
+               </div>
+
+         <?php
+            }
+         }
          ?>
 
-         
-         
+
+
       </div>
    </div>
 </section>
@@ -472,169 +473,170 @@
 <!-- end product section -->
 
 <script type="text/javascript">
-
    let bocx = document.querySelectorAll(".bocx")
-   bocx.forEach((e,n) => {
-      if(n > 2){
+   bocx.forEach((e, n) => {
+      if (n > 2) {
          e.style.display = "none"
       }
    })
 
-   $(document).ready(function(){
-    $('.option1').click(function(){
-      var product_id    = $(this).data("idproduk");
-      var product_name  = $(this).data("namaproduk");
-      var product_price = $(this).data("hargaproduk");
-      var quantity      = 1;
-      var srcImg        = this.getAttribute("data-srcImg")
-      var ukuran        = this.getAttribute("data-ukuran")
-      var model        = this.getAttribute("data-model")
-      var bahan        = this.getAttribute("data-bahan")
-      console.log(srcImg)
-      $.ajax({
-        url : "<?= site_url('add_to_cart');?>",
-        method : "POST",
-        data : {
-            product_id: product_id, 
-            product_name: product_name, 
-            product_price: product_price,
-            quantity: quantity,
-            image: srcImg,
-            ukuran: ukuran,
-            model: model,
-            bahan: bahan,
-         },
-         success: function(data){
-          $('#tbody').html(data);
-          // alert("Berhasil ditambahkan ke keranjang")
-          location.reload()
-      }
-   });
-});
-
-    $('#tbody').load("<?php echo site_url('load_cart');?>");
-
-    $(document).on("change", ".product_qty", function(){
-      $.ajax({
-         url : "<?php echo site_url('update_cart');?>",
-         method : "POST",
-         data : {
-            row_id : $(this).data("rowid"),
-            qty: $(this).val()
-         },
-         success :function(data){
-            $('#tbody').html(data);
-         }
-      });
-   })
-
-    $(document).on('click','.hapus_cart',function(){
-      var row_id=$(this).attr("id"); 
-      $.ajax({
-        url : "<?php echo site_url('delete_cart');?>",
-        method : "POST",
-        data : {row_id : row_id},
-        success :function(data){
-          $('#tbody').html(data);
-       }
-    });
-   });
-
-
-   $("#btn_send_wa").click(()=>{
-      let _data = []
-      let uuid_co = rand(10)
-      let alamat_penerima = $("#info_modal_alamat_pemesan").html()
-      let no_telp = $("#info_modal_no_penerima").html()
-      let srcPembayaran = document.querySelector("#buktiInputPembayaran")
-
-      $.map($("#data_table_tr > #data_table_text_product"), function (elem, index){
-
-         _data[index] = {
-            id_barang: elem.getAttribute("data-id_produk"),
-            product: elem.getAttribute("data-textproduct"),
-            banyak: elem.getAttribute("data-banyakproduk"),
-            harga: elem.getAttribute("data-hargaperitem"),
-            image: elem.getAttribute("data-image"),
-            ukuran: elem.getAttribute("data-ukuran"),
-            model: elem.getAttribute("data-model"),
-            bahan: elem.getAttribute("data-bahan"),
-            provinsi: $("#provinsi").data("provinsi"),
-            kota: $("#kota").data("kota"),
-            ekspedisi: $("#ekspedisi").data("ekspedisi"),
-            ongkir: $("#ongkir").data("ongkir"),
-         }
-      })
-
-      let data = JSON.stringify(_data)
-
-      sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
-
-   })
-   
-
-   function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
-      var xhr = new XMLHttpRequest();
-      var url = "http://localhost/app/co/";
-
-      let form = new FormData()
-
-      form.append("uuid", uuid_co)
-      form.append("data", _data)
-      form.append("alamat", alamat_penerima)
-      form.append("no_telp", no_telp)
-      // form.append("gambarPembayaran", srcPembayaran.files)
-      jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
-          form.append('gambarPembayaran', file);
+   $(document).ready(function() {
+      $('.option1').click(function() {
+         var product_id = $(this).data("idproduk");
+         var product_name = $(this).data("namaproduk");
+         var product_price = $(this).data("hargaproduk");
+         var quantity = 1;
+         var srcImg = this.getAttribute("data-srcImg")
+         var ukuran = this.getAttribute("data-ukuran")
+         var model = this.getAttribute("data-model")
+         var bahan = this.getAttribute("data-bahan")
+         console.log(srcImg)
+         $.ajax({
+            url: "<?= site_url('add_to_cart'); ?>",
+            method: "POST",
+            data: {
+               product_id: product_id,
+               product_name: product_name,
+               product_price: product_price,
+               quantity: quantity,
+               image: srcImg,
+               ukuran: ukuran,
+               model: model,
+               bahan: bahan,
+            },
+            success: function(data) {
+               $('#tbody').html(data);
+               // alert("Berhasil ditambahkan ke keranjang")
+               location.reload()
+            }
+         });
       });
 
-      let formData = new FormData();
-      fetch('http://localhost/app/co/', {
-          method:"POST",
-          body: form
-      })
-      .then(response =>{
-          response.text()
-          .then(data => {
-               let alertData = data
-               if(alertData == "tidak bisa checkout karena stok terbatastrue"){
-                  let newAlert = alertData.substring(0, alertData.indexOf("true"));
-                  alert(newAlert)
-                  location.reload()
-               }
-               if(data == true || data == "true"){
-                  let id_userss = "<?= ($this->session->userdata('user_logged'))? $this->session->userdata('user_logged')['id_user'] : '123' ?>"
-                  if(id_userss != null || id_userss != "" || id_userss != 0){
-                     window.location.replace("<?= base_url('riwayat/'.(isset($this->session->userdata['user_logged']) ? $this->session->userdata('user_logged')['id_user'] : '123')) ?>")
-                  }else{
-                     alert("Silahkan login terlebih dahulu")
-                  }
-               }
-          })
+      $('#tbody').load("<?php echo site_url('load_cart'); ?>");
+
+      $(document).on("change", ".product_qty", function() {
+         $.ajax({
+            url: "<?php echo site_url('update_cart'); ?>",
+            method: "POST",
+            data: {
+               row_id: $(this).data("rowid"),
+               qty: $(this).val()
+            },
+            success: function(data) {
+               $('#tbody').html(data);
+            }
+         });
       })
 
-      return false;
-  }
+      $(document).on('click', '.hapus_cart', function() {
+         var row_id = $(this).attr("id");
+         $.ajax({
+            url: "<?php echo site_url('delete_cart'); ?>",
+            method: "POST",
+            data: {
+               row_id: row_id
+            },
+            success: function(data) {
+               $('#tbody').html(data);
+            }
+         });
+      });
 
-   const rupiah = (number)=>{
-     return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR"
-    }).format(number);
-   }
 
-  const rand = length => {
-      let result = '';
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charactersLength = characters.length;
-      let counter = 0;
-      while (counter < length) {
-         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-         counter += 1;
+      $("#btn_send_wa").click(() => {
+         let _data = []
+         let uuid_co = rand(10)
+         let alamat_penerima = $("#info_modal_alamat_pemesan").html()
+         let no_telp = $("#info_modal_no_penerima").html()
+         let srcPembayaran = document.querySelector("#buktiInputPembayaran")
+
+         $.map($("#data_table_tr > #data_table_text_product"), function(elem, index) {
+
+            _data[index] = {
+               id_barang: elem.getAttribute("data-id_produk"),
+               product: elem.getAttribute("data-textproduct"),
+               banyak: elem.getAttribute("data-banyakproduk"),
+               harga: elem.getAttribute("data-hargaperitem"),
+               image: elem.getAttribute("data-image"),
+               ukuran: elem.getAttribute("data-ukuran"),
+               model: elem.getAttribute("data-model"),
+               bahan: elem.getAttribute("data-bahan"),
+               provinsi: $("#provinsi").data("provinsi"),
+               kota: $("#kota").data("kota"),
+               ekspedisi: $("#ekspedisi").data("ekspedisi"),
+               ongkir: $("#ongkir").data("ongkir"),
+            }
+         })
+
+         let data = JSON.stringify(_data)
+
+         sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
+
+      })
+
+
+      function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
+         var xhr = new XMLHttpRequest();
+         var url = "http://localhost/app/co/";
+
+         let form = new FormData()
+
+         form.append("uuid", uuid_co)
+         form.append("data", _data)
+         form.append("alamat", alamat_penerima)
+         form.append("no_telp", no_telp)
+         // form.append("gambarPembayaran", srcPembayaran.files)
+         jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
+            form.append('gambarPembayaran', file);
+         });
+
+         let formData = new FormData();
+         fetch('http://localhost/app/co/', {
+               method: "POST",
+               body: form
+            })
+            .then(response => {
+               response.text()
+                  .then(data => {
+                     let alertData = data
+                     if (alertData == "tidak bisa checkout karena stok terbatastrue") {
+                        let newAlert = alertData.substring(0, alertData.indexOf("true"));
+                        alert(newAlert)
+                        location.reload()
+                     }
+                     if (data == true || data == "true") {
+                        let id_userss = "<?= ($this->session->userdata('user_logged')) ? $this->session->userdata('user_logged')['id_user'] : '123' ?>"
+                        if (id_userss != null || id_userss != "" || id_userss != 0) {
+                           window.location.replace("<?= base_url('riwayat/' . (isset($this->session->userdata['user_logged']) ? $this->session->userdata('user_logged')['id_user'] : '123')) ?>")
+                        } else {
+                           alert("Silahkan login terlebih dahulu")
+                        }
+                     }
+                  })
+            })
+
+         return false;
       }
-      return result;
-  }
+
+      const rupiah = (number) => {
+         return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR"
+         }).format(number);
+      }
+
+      const rand = length => {
+         let result = '';
+         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+         const charactersLength = characters.length;
+         let counter = 0;
+         while (counter < length) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            counter += 1;
+         }
+         return result;
+      }
 
 
-})
+   })
 </script>

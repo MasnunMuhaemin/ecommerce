@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 
 
 	public function __construct()
@@ -11,21 +12,24 @@ class Auth extends CI_Controller {
 		$this->load->library('cart');
 	}
 
-	public function index(){
+	public function index()
+	{
 		$data = [
 			'title' => "Silahkan Masuk"
 		];
 		$this->load->view('auth/login', $data);
 	}
 
-	function register(){
+	function register()
+	{
 		$data = [
 			'title' => "Silahkan Daftar"
 		];
 		$this->load->view('auth/register', $data);
 	}
 
-	function actRegister(){
+	function actRegister()
+	{
 
 		$this->form_validation->set_rules('fullname', 'Nama Lengkap', 'trim|required');
 		$this->form_validation->set_rules('phone', 'No. Whatsapp', 'trim|required');
@@ -43,7 +47,7 @@ class Auth extends CI_Controller {
 			$alamat = htmlspecialchars($this->input->post('alamat'));
 
 			if (isset($email)) {
-				if($this->auth->checkEmail($email)){
+				if ($this->auth->checkEmail($email)) {
 					$dataUser = [
 						'id_users' => $uuid,
 						'id_role' => 3,
@@ -56,25 +60,23 @@ class Auth extends CI_Controller {
 
 					if ($response = $this->auth->register($dataUser)) {
 						redirect("login", "refresh");
-					}else{
+					} else {
 						$this->session->set_flashdata('errDaftar', 'Terjadi kesalahan');
 						redirect("register");
 					}
-				}else{
+				} else {
 					$this->session->set_flashdata('errDaftar', 'E-mail sudah digunakan');
 					redirect("register");
 				}
 			}
-
-			
-
-		}else {
+		} else {
 			$this->session->set_flashdata('errDaftar', 'Isi data dengan benar');
 			redirect("register");
 		}
 	}
 
-	function actLogin(){
+	function actLogin()
+	{
 		$this->form_validation->set_rules('email', 'E-Mail', 'trim|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
@@ -83,9 +85,9 @@ class Auth extends CI_Controller {
 			$password = htmlspecialchars($this->input->post('password'));
 			if (isset($email) && isset($password)) {
 				$dataLogged = $this->auth->login($email, $password);
-				
-				if($dataLogged != false){
-					if($dataLogged[0]->role == "admin" || $dataLogged[0]->role == "pengelola" || $dataLogged[0]->role == "pemilik"){
+
+				if ($dataLogged != false) {
+					if ($dataLogged[0]->role == "admin" || $dataLogged[0]->role == "pengelola" || $dataLogged[0]->role == "pemilik") {
 						$array = array(
 							'id_user' => $dataLogged[0]->id_users,
 							'nama_lengkap' => $dataLogged[0]->nama_lengkap,
@@ -98,11 +100,11 @@ class Auth extends CI_Controller {
 							'admin_logged' => $array
 						];
 
-						$this->session->set_userdata( $dataSession );
-						
-// die('test');
+						$this->session->set_userdata($dataSession);
+
+						// die('test');
 						redirect("admin", "refresh");
-					}else{
+					} else {
 						$array = array(
 							'id_user' => $dataLogged[0]->id_users,
 							'nama_lengkap' => $dataLogged[0]->nama_lengkap,
@@ -115,18 +117,18 @@ class Auth extends CI_Controller {
 						$dataSession = [
 							'user_logged' => $array
 						];
-						$this->session->set_userdata( $dataSession );
+						$this->session->set_userdata($dataSession);
 
-						echo "<script>localStorage.setItem('uuid', '".$dataLogged[0]->id_users."_abs');</script>";
+						echo "<script>localStorage.setItem('uuid', '" . $dataLogged[0]->id_users . "_abs');</script>";
 
 						// die('test');
 						redirect("", "refresh");
 					}
-				}else{
+				} else {
 					$this->session->set_flashdata('errActLogin', 'Username atau Password salah');
-					redirect("auth", "refresh");	
+					redirect("auth", "refresh");
 				}
-			}else{
+			} else {
 				$this->session->set_flashdata('errActLogin', 'Terjadi kesalahan internal');
 				redirect("auth", "refresh");
 			}
@@ -136,24 +138,23 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	function saveDataRecommend(){
-		
+	function saveDataRecommend()
+	{
 	}
 
-	function logout(){
+	function logout()
+	{
 		if ($this->session->userdata('admin_logged')) {
 			$this->session->unset_userdata('admin_logged');
 			echo '<script>localStorage.setItem("uuid", parseInt(10)+Math.floor(Math.random() * (parseInt(100000) - parseInt(10) + 1))+"_abs")</script>';
-			redirect('login','refresh');
-		}else if($this->session->userdata('user_logged')){
+			redirect('login', 'refresh');
+		} else if ($this->session->userdata('user_logged')) {
 			$this->cart->destroy();
 			$this->session->unset_userdata('user_logged');
 			echo '<script>localStorage.setItem("uuid", parseInt(10)+Math.floor(Math.random() * (parseInt(100000) - parseInt(10) + 1))+"_abs")</script>';
-			redirect('','refresh');
+			redirect('', 'refresh');
 		}
 	}
-
-
 }
 
 /* End of file Auth.php */

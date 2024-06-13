@@ -18,8 +18,22 @@
 					<div class="gmap_canvas">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2305463814387!2d108.47777867454178!3d-6.98209846837234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6f142e9e690689%3A0x1f9e7d741164b80c!2sJl.%20Ps.%20Kepuh%2C%20Kuningan%2C%20Kec.%20Kuningan%2C%20Kabupaten%20Kuningan%2C%20Jawa%20Barat%2045511!5e0!3m2!1sid!2sid!4v1687451980589!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 						<a href="https://technologg.com/" style="display:none">technologg</a>
-						<style>.mapouter{position:relative;text-align:right;height:400px;width:100%;}</style>
-						<style>.gmap_canvas{overflow:hidden;background:none!important;height:400px;width:100%;}</style>
+						<style>
+							.mapouter {
+								position: relative;
+								text-align: right;
+								height: 400px;
+								width: 100%;
+							}
+						</style>
+						<style>
+							.gmap_canvas {
+								overflow: hidden;
+								background: none !important;
+								height: 400px;
+								width: 100%;
+							}
+						</style>
 					</div>
 				</div>
 			</div>
@@ -128,7 +142,7 @@
 
 	nowa.addEventListener("change", () => {
 		dataContact[1] = nowa.value
-		if(checkVarDataUser()){
+		if (checkVarDataUser()) {
 			btn.style.display = "block"
 		}
 	})
@@ -142,176 +156,178 @@
 
 	message.addEventListener("change", () => {
 		dataContact[3] = message.value
-		if(checkVarDataUser()){
+		if (checkVarDataUser()) {
 			btn.style.display = "block"
 		}
 	})
 
 
-	function checkVarDataUser(){
-		if(dataContact[0] != null && dataContact[1] != null && dataContact[2] != null && dataContact[3] != null){
-			btn.setAttribute("href", "https://api.whatsapp.com/send?phone=6283824587800&text=Hallo Kak saya "+nama_lengkap.value+" ingin mengajukan "+subjek.value+" terhadap cemilannya "+message.value)
+	function checkVarDataUser() {
+		if (dataContact[0] != null && dataContact[1] != null && dataContact[2] != null && dataContact[3] != null) {
+			btn.setAttribute("href", "https://api.whatsapp.com/send?phone=6283824587800&text=Hallo Kak saya " + nama_lengkap.value + " ingin mengajukan " + subjek.value + " terhadap cemilannya " + message.value)
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	$(document).ready(function(){
-		$('#dataproduk').click(function(){
-			var product_id    = $(this).data("idproduk");
-			var product_name  = $(this).data("namaproduk");
+	$(document).ready(function() {
+		$('#dataproduk').click(function() {
+			var product_id = $(this).data("idproduk");
+			var product_name = $(this).data("namaproduk");
 			var product_price = $(this).data("hargaproduk");
-			var quantity      = $("#jml_pesan").val();
-			var stok 		  = $(this).data("stok")
+			var quantity = $("#jml_pesan").val();
+			var stok = $(this).data("stok")
 			console.log(stok)
-			if(parseInt($("#jml_pesan").val()) != -1 && parseInt($("#jml_pesan").val()) != 0){
+			if (parseInt($("#jml_pesan").val()) != -1 && parseInt($("#jml_pesan").val()) != 0) {
 				if ($("#jml_pesan").val() <= parseInt(stok)) {
 					$.ajax({
-						url : "<?= site_url('add_to_cart');?>",
-						method : "POST",
-						data : {
-							product_id: product_id, 
-							product_name: product_name, 
+						url: "<?= site_url('add_to_cart'); ?>",
+						method: "POST",
+						data: {
+							product_id: product_id,
+							product_name: product_name,
 							product_price: product_price,
 							quantity: quantity
 						},
-						success: function(data){
+						success: function(data) {
 							$('#tbody').html(data);
 							alert("Berhasil ditambahkan ke keranjang")
 						}
 					});
-				}else{
-					alert("Maaf anda ngece yaa, Stokan cuma ada: "+stok)
+				} else {
+					alert("Maaf anda ngece yaa, Stokan cuma ada: " + stok)
 				}
-				
-			}else{
+
+			} else {
 				alert("Niat beli ga cok!, isi ko minus/ nol badjingan")
 			}
 
 		});
 
-		$('#tbody').load("<?php echo site_url('load_cart');?>");
+		$('#tbody').load("<?php echo site_url('load_cart'); ?>");
 
-		$(document).on('click','.hapus_cart',function(){
-			var row_id=$(this).attr("id"); 
+		$(document).on('click', '.hapus_cart', function() {
+			var row_id = $(this).attr("id");
 			$.ajax({
-				url : "<?php echo site_url('delete_cart');?>",
-				method : "POST",
-				data : {row_id : row_id},
-				success :function(data){
+				url: "<?php echo site_url('delete_cart'); ?>",
+				method: "POST",
+				data: {
+					row_id: row_id
+				},
+				success: function(data) {
 					$('#tbody').html(data);
 				}
 			});
 		});
 
-		$(document).on("change", ".product_qty", function(){
+		$(document).on("change", ".product_qty", function() {
 			$.ajax({
-				url : "<?php echo site_url('update_cart');?>",
-				method : "POST",
-				data : {
-					row_id : $(this).data("rowid"),
+				url: "<?php echo site_url('update_cart'); ?>",
+				method: "POST",
+				data: {
+					row_id: $(this).data("rowid"),
 					qty: $(this).val()
 				},
-				success :function(data){
+				success: function(data) {
 					$('#tbody').html(data);
 				}
 			});
 		})
 
-		$("#btn_send_wa").click(()=>{
-      let _data = []
-      let uuid_co = rand(10)
-      let alamat_penerima = $("#alamat_pemesan").val()
-      let no_telp = $("#info_modal_no_penerima").html()
-      let srcPembayaran = document.querySelector("#buktiInputPembayaran")
-      $.map($("#data_table_tr > #data_table_text_product"), function (elem, index){
-         _data[index] = {
-            id_barang: elem.getAttribute("data-id_produk"),
-            product: elem.getAttribute("data-textproduct"),
-            banyak: elem.getAttribute("data-banyakproduk"),
-            harga: elem.getAttribute("data-hargaperitem"),
-            image: elem.getAttribute("data-image"),
-            ukuran: elem.getAttribute("data-ukuran"),
-            model: elem.getAttribute("data-model"),
-            bahan: elem.getAttribute("data-bahan"),
-            provinsi: $("#provinsi").data("provinsi"),
-            kota: $("#kota").data("kota"),
-            ekspedisi: $("#ekspedisi").data("ekspedisi"),
-            ongkir: $("#ongkir").data("ongkir")
-         }
-      })
+		$("#btn_send_wa").click(() => {
+			let _data = []
+			let uuid_co = rand(10)
+			let alamat_penerima = $("#alamat_pemesan").val()
+			let no_telp = $("#info_modal_no_penerima").html()
+			let srcPembayaran = document.querySelector("#buktiInputPembayaran")
+			$.map($("#data_table_tr > #data_table_text_product"), function(elem, index) {
+				_data[index] = {
+					id_barang: elem.getAttribute("data-id_produk"),
+					product: elem.getAttribute("data-textproduct"),
+					banyak: elem.getAttribute("data-banyakproduk"),
+					harga: elem.getAttribute("data-hargaperitem"),
+					image: elem.getAttribute("data-image"),
+					ukuran: elem.getAttribute("data-ukuran"),
+					model: elem.getAttribute("data-model"),
+					bahan: elem.getAttribute("data-bahan"),
+					provinsi: $("#provinsi").data("provinsi"),
+					kota: $("#kota").data("kota"),
+					ekspedisi: $("#ekspedisi").data("ekspedisi"),
+					ongkir: $("#ongkir").data("ongkir")
+				}
+			})
 
-      console.log(_data)
+			console.log(_data)
 
-      let data = JSON.stringify(_data)
+			let data = JSON.stringify(_data)
 
-      sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
+			sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
 
-   })
-   
+		})
 
-   function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
-      var xhr = new XMLHttpRequest();
-      var url = "http://localhost/app/co/";
 
-      let form = new FormData()
+		function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost/app/co/";
 
-      form.append("uuid", uuid_co)
-      form.append("data", _data)
-      form.append("alamat", alamat_penerima)
-      form.append("no_telp", no_telp)
-      // form.append("gambarPembayaran", srcPembayaran.files)
-      jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
-          form.append('gambarPembayaran', file);
-      });
+			let form = new FormData()
 
-      let formData = new FormData();
-      fetch('http://localhost/app/co/', {
-          method:"POST",
-          body: form
-      })
-      .then(response =>{
-          response.text()
-          .then(data => {
-               let alertData = data
-               if(alertData == "tidak bisa checkout karena stok terbatastrue"){
-                  let newAlert = alertData.substring(0, alertData.indexOf("true"));
-                  alert(newAlert)
-                  location.reload()
-               }
-               if(data == true || data == "true"){
-                  let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
-                  if(id_userss != null || id_userss != "" || id_userss != 0){
-                     window.location.replace("<?= base_url('riwayat/'.$this->session->userdata('user_logged')['id_user']) ?>")
-                  }else{
-                     alert("Silahkan login terlebih dahulu")
-                  }
-               }
-          })
-      })
+			form.append("uuid", uuid_co)
+			form.append("data", _data)
+			form.append("alamat", alamat_penerima)
+			form.append("no_telp", no_telp)
+			// form.append("gambarPembayaran", srcPembayaran.files)
+			jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
+				form.append('gambarPembayaran', file);
+			});
 
-      return false;
-  }
+			let formData = new FormData();
+			fetch('http://localhost/app/co/', {
+					method: "POST",
+					body: form
+				})
+				.then(response => {
+					response.text()
+						.then(data => {
+							let alertData = data
+							if (alertData == "tidak bisa checkout karena stok terbatastrue") {
+								let newAlert = alertData.substring(0, alertData.indexOf("true"));
+								alert(newAlert)
+								location.reload()
+							}
+							if (data == true || data == "true") {
+								let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
+								if (id_userss != null || id_userss != "" || id_userss != 0) {
+									window.location.replace("<?= base_url('riwayat/' . $this->session->userdata('user_logged')['id_user']) ?>")
+								} else {
+									alert("Silahkan login terlebih dahulu")
+								}
+							}
+						})
+				})
 
-   const rupiah = (number)=>{
-     return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR"
-    }).format(number);
-   }
+			return false;
+		}
 
-  const rand = length => {
-      let result = '';
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charactersLength = characters.length;
-      let counter = 0;
-      while (counter < length) {
-         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-         counter += 1;
-      }
-      return result;
-  }
+		const rupiah = (number) => {
+			return new Intl.NumberFormat("id-ID", {
+				style: "currency",
+				currency: "IDR"
+			}).format(number);
+		}
+
+		const rand = length => {
+			let result = '';
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			const charactersLength = characters.length;
+			let counter = 0;
+			while (counter < length) {
+				result += characters.charAt(Math.floor(Math.random() * charactersLength));
+				counter += 1;
+			}
+			return result;
+		}
 
 	})
 </script>

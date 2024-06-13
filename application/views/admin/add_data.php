@@ -78,7 +78,6 @@
 </div>
 
 <script>
-
 	let label = document.querySelector(".custom-file-label");
 	let inputFile = document.querySelector("input[type='file']");
 
@@ -94,4 +93,3 @@
 	// 	});
 	// });
 </script>
-

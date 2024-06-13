@@ -1,17 +1,17 @@
 <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <strong>© 2021 All Rights Reserved By <a href="https://fkom.uniku.ac.id/">SKRIPSI FKOM UNIKU</a></strong>
-    Create By <a href="https://www.instagram.com/riogofani/" target="_blank">RIO GOFANI</a>
-    <!-- <div class="float-right d-none d-sm-inline-block">
+<!-- Main Footer -->
+<footer class="main-footer">
+  <strong>© 2021 All Rights Reserved By <a href="https://fkom.uniku.ac.id/">SKRIPSI FKOM UNIKU</a></strong>
+  Create By <a href="https://www.instagram.com/riogofani/" target="_blank">RIO GOFANI</a>
+  <!-- <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.2.0
     </div> -->
-  </footer>
+</footer>
 </div>
 <!-- ./wrapper -->
 
@@ -44,4 +44,5 @@
 
 
 </body>
+
 </html>

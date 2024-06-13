@@ -89,17 +89,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if($data != null){ foreach($data as $key => $val){ ?>
-                      <tr>
-                        <td><?= $key+1 ?></td>
-                        <td><?= $val->kode_barang ?></td>
-                        <td><?= $val->nama_barang ?></td>
-                        <td><?= $val->harga_barang ?></td>
-                        <td><?= $val->stok_pengeluaran ?></td>
-                        <td><span class="badge bg-success">Rp. <?= number_format($val->total_pendapatan) ?></span></td>
-                        <!-- <td class="text-right"><a href="<?= base_url("print_invoice") ?>" rel="noopener" target="_blank" class="btn btn-default w-100"><i class="fas fa-print"></i> Print</a></td> -->
-                      </tr>
-                    <?php }} ?>
+                    <?php if ($data != null) {
+                      foreach ($data as $key => $val) { ?>
+                        <tr>
+                          <td><?= $key + 1 ?></td>
+                          <td><?= $val->kode_barang ?></td>
+                          <td><?= $val->nama_barang ?></td>
+                          <td><?= $val->harga_barang ?></td>
+                          <td><?= $val->stok_pengeluaran ?></td>
+                          <td><span class="badge bg-success">Rp. <?= number_format($val->total_pendapatan) ?></span></td>
+                          <!-- <td class="text-right"><a href="<?= base_url("print_invoice") ?>" rel="noopener" target="_blank" class="btn btn-default w-100"><i class="fas fa-print"></i> Print</a></td> -->
+                        </tr>
+                    <?php }
+                    } ?>
                   </tbody>
                 </table>
               </div>

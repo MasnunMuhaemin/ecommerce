@@ -1,13 +1,13 @@
 <section class="inner_page_head">
-	<div class="container_fuild">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="full">
-					<h3>About US</h3>
-				</div>
-			</div>
-		</div>
-	</div>
+   <div class="container_fuild">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="full">
+               <h3>About US</h3>
+            </div>
+         </div>
+      </div>
+   </div>
 </section>
 
 <section class="why_section layout_padding">
@@ -258,8 +258,8 @@
 </section>
 
 <script type="text/javascript">
-   $(document).ready(function(){
-      $('#tbody').load("<?php echo site_url('load_cart');?>");
+   $(document).ready(function() {
+      $('#tbody').load("<?php echo site_url('load_cart'); ?>");
 
       // $("#btn_send_wa").click(function(){
       //    const cartName = [];
@@ -281,109 +281,109 @@
       //    console.log(text)
       // })
 
-      $("#btn_send_wa").click(()=>{
-      let _data = []
-      let uuid_co = rand(10)
-      let alamat_penerima = $("#alamat_pemesan").val()
-      let no_telp = $("#info_modal_no_penerima").html()
-      let srcPembayaran = document.querySelector("#buktiInputPembayaran")
-      $.map($("#data_table_tr > #data_table_text_product"), function (elem, index){
-         _data[index] = {
-            id_barang: elem.getAttribute("data-id_produk"),
-            product: elem.getAttribute("data-textproduct"),
-            banyak: elem.getAttribute("data-banyakproduk"),
-            harga: elem.getAttribute("data-hargaperitem"),
-            image: elem.getAttribute("data-image"),
-            ukuran: elem.getAttribute("data-ukuran"),
-            model: elem.getAttribute("data-model"),
-            bahan: elem.getAttribute("data-bahan"),
-            provinsi: $("#provinsi").data("provinsi"),
-            kota: $("#kota").data("kota"),
-            ekspedisi: $("#ekspedisi").data("ekspedisi"),
-            ongkir: $("#ongkir").data("ongkir")
-         }
+      $("#btn_send_wa").click(() => {
+         let _data = []
+         let uuid_co = rand(10)
+         let alamat_penerima = $("#alamat_pemesan").val()
+         let no_telp = $("#info_modal_no_penerima").html()
+         let srcPembayaran = document.querySelector("#buktiInputPembayaran")
+         $.map($("#data_table_tr > #data_table_text_product"), function(elem, index) {
+            _data[index] = {
+               id_barang: elem.getAttribute("data-id_produk"),
+               product: elem.getAttribute("data-textproduct"),
+               banyak: elem.getAttribute("data-banyakproduk"),
+               harga: elem.getAttribute("data-hargaperitem"),
+               image: elem.getAttribute("data-image"),
+               ukuran: elem.getAttribute("data-ukuran"),
+               model: elem.getAttribute("data-model"),
+               bahan: elem.getAttribute("data-bahan"),
+               provinsi: $("#provinsi").data("provinsi"),
+               kota: $("#kota").data("kota"),
+               ekspedisi: $("#ekspedisi").data("ekspedisi"),
+               ongkir: $("#ongkir").data("ongkir")
+            }
+         })
+
+         console.log(_data)
+
+         let data = JSON.stringify(_data)
+
+         sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
+
       })
 
-      console.log(_data)
 
-      let data = JSON.stringify(_data)
+      function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
+         var xhr = new XMLHttpRequest();
+         var url = "http://localhost/app/co/";
 
-      sendData(uuid_co, data, alamat_penerima, no_telp, srcPembayaran)
+         let form = new FormData()
 
-   })
-   
+         form.append("uuid", uuid_co)
+         form.append("data", _data)
+         form.append("alamat", alamat_penerima)
+         form.append("no_telp", no_telp)
+         // form.append("gambarPembayaran", srcPembayaran.files)
+         jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
+            form.append('gambarPembayaran', file);
+         });
 
-   function sendData(uuid_co, _data, alamat_penerima, no_telp, srcPembayaran) {
-      var xhr = new XMLHttpRequest();
-      var url = "http://localhost/app/co/";
+         let formData = new FormData();
+         fetch('http://localhost/app/co/', {
+               method: "POST",
+               body: form
+            })
+            .then(response => {
+               response.text()
+                  .then(data => {
+                     let alertData = data
+                     if (alertData == "tidak bisa checkout karena stok terbatastrue") {
+                        let newAlert = alertData.substring(0, alertData.indexOf("true"));
+                        alert(newAlert)
+                        location.reload()
+                     }
+                     if (data == true || data == "true") {
+                        let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
+                        if (id_userss != null || id_userss != "" || id_userss != 0) {
+                           window.location.replace("<?= base_url('riwayat/' . $this->session->userdata('user_logged')['id_user']) ?>")
+                        } else {
+                           alert("Silahkan login terlebih dahulu")
+                        }
+                     }
+                  })
+            })
 
-      let form = new FormData()
-
-      form.append("uuid", uuid_co)
-      form.append("data", _data)
-      form.append("alamat", alamat_penerima)
-      form.append("no_telp", no_telp)
-      // form.append("gambarPembayaran", srcPembayaran.files)
-      jQuery.each(jQuery('#buktiInputPembayaran')[0].files, function(i, file) {
-          form.append('gambarPembayaran', file);
-      });
-
-      let formData = new FormData();
-      fetch('http://localhost/app/co/', {
-          method:"POST",
-          body: form
-      })
-      .then(response =>{
-          response.text()
-          .then(data => {
-               let alertData = data
-               if(alertData == "tidak bisa checkout karena stok terbatastrue"){
-                  let newAlert = alertData.substring(0, alertData.indexOf("true"));
-                  alert(newAlert)
-                  location.reload()
-               }
-               if(data == true || data == "true"){
-                  let id_userss = "<?= $this->session->userdata('user_logged')['id_user'] ?>"
-                  if(id_userss != null || id_userss != "" || id_userss != 0){
-                     window.location.replace("<?= base_url('riwayat/'.$this->session->userdata('user_logged')['id_user']) ?>")
-                  }else{
-                     alert("Silahkan login terlebih dahulu")
-                  }
-               }
-          })
-      })
-
-      return false;
-  }
-
-   const rupiah = (number)=>{
-     return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR"
-    }).format(number);
-   }
-
-  const rand = length => {
-      let result = '';
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charactersLength = characters.length;
-      let counter = 0;
-      while (counter < length) {
-         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-         counter += 1;
+         return false;
       }
-      return result;
-  }
 
-      $(document).on("change", ".product_qty", function(){
+      const rupiah = (number) => {
+         return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR"
+         }).format(number);
+      }
+
+      const rand = length => {
+         let result = '';
+         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+         const charactersLength = characters.length;
+         let counter = 0;
+         while (counter < length) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            counter += 1;
+         }
+         return result;
+      }
+
+      $(document).on("change", ".product_qty", function() {
          $.ajax({
-            url : "<?php echo site_url('update_cart');?>",
-            method : "POST",
-            data : {
-               row_id : $(this).data("rowid"),
+            url: "<?php echo site_url('update_cart'); ?>",
+            method: "POST",
+            data: {
+               row_id: $(this).data("rowid"),
                qty: $(this).val()
             },
-            success :function(data){
+            success: function(data) {
                $('#tbody').html(data);
             }
          });

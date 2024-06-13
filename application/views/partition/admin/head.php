@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,5 +18,6 @@
   <link rel="stylesheet" href="<?= base_url("assets/admin/") ?>dist/css/styleChatAdmin.css">
   <script src="<?= base_url("assets/admin/") ?>plugins/jquery/jquery.min.js"></script>
 </head>
+
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-<div class="wrapper">
+  <div class="wrapper">

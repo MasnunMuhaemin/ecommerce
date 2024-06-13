@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Recommended extends CI_Controller {
+class Recommended extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -12,8 +13,7 @@ class Recommended extends CI_Controller {
 		$this->load->library('QRISDANA');
 	}
 
-	public function index(){
-		
+	public function index()
+	{
 	}
-
 }

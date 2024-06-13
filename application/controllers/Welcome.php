@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -12,19 +13,19 @@ class Welcome extends CI_Controller {
 		$this->load->library('QRISDANA');
 	}
 
-	public function index(){
+	public function index()
+	{
 
-		$data = Array();
-		$datasRecommended = Array();
+		$data = array();
+		$datasRecommended = array();
 
 		if ($this->m_produk->getAll() != null) {
-			if($this->session->userdata("user_logged")){
+			if ($this->session->userdata("user_logged")) {
 				$datas = $this->m_produk->getRecommendByID($this->session->userdata["user_logged"]['id_user']);
-				if($datas != null || $datas != false){
-					foreach($datas as $indexes => $val){
+				if ($datas != null || $datas != false) {
+					foreach ($datas as $indexes => $val) {
 						$datasRecommended[$indexes] = $this->m_produk->getRecommended($val['harga'], $val['bahan']);
 					}
-
 				}
 				$data = [
 					'title' => "E-Commerce",
@@ -32,7 +33,7 @@ class Welcome extends CI_Controller {
 					'data_recommend' => $datasRecommended,
 					'totalItems' => $this->cart->total_items()
 				];
-			}else{
+			} else {
 				$data = [
 					'title' => "E-Commerce",
 					'data' => $this->m_produk->getAll(),
@@ -40,7 +41,7 @@ class Welcome extends CI_Controller {
 					'totalItems' => $this->cart->total_items()
 				];
 			}
-		}else{
+		} else {
 			$data = [
 				'title' => "E-Commerce",
 				'data' => null,
@@ -48,12 +49,13 @@ class Welcome extends CI_Controller {
 			];
 		}
 
-		
+
 
 		frontEnd("user/home", $data);
 	}
 
-	function view_all_product(){
+	function view_all_product()
+	{
 		$data = array();
 		if ($this->m_produk->getAll() != null) {
 			$data = [
@@ -61,7 +63,7 @@ class Welcome extends CI_Controller {
 				'data' => $this->m_produk->getAll(),
 				'totalItems' => $this->cart->total_items()
 			];
-		}else{
+		} else {
 			$data = [
 				'title' => "E-Commerce",
 				'data' => null,
@@ -69,10 +71,10 @@ class Welcome extends CI_Controller {
 			];
 		}
 		frontEnd("user/product", $data);
-
 	}
 
-	function about_company(){
+	function about_company()
+	{
 		$data = [
 			'title' => "E-Commerce",
 			'totalItems' => $this->cart->total_items()
@@ -81,7 +83,8 @@ class Welcome extends CI_Controller {
 		frontEnd("user/about", $data);
 	}
 
-	function contact(){
+	function contact()
+	{
 		$data = [
 			'title' => "E-Commerce",
 			'totalItems' => $this->cart->total_items()
@@ -90,9 +93,10 @@ class Welcome extends CI_Controller {
 		frontEnd("user/contact", $data);
 	}
 
-	function detailProduk(){
+	function detailProduk()
+	{
 		$id = $this->uri->segment(2);
-		
+
 		$data = [
 			'title' => "E-Commerce",
 			'data' => $this->m_produk->getDetailProduk($id),
@@ -102,19 +106,19 @@ class Welcome extends CI_Controller {
 		frontEnd("user/detail_product", $data);
 	}
 
-	function riwayat($id){
+	function riwayat($id)
+	{
 		if ($this->session->userdata('user_logged')['id_user'] == $id) {
 
 			$data = [];
 
-			if($this->m_cart->getCheckout($id) !== FALSE){
+			if ($this->m_cart->getCheckout($id) !== FALSE) {
 				$data = [
 					'title' => "E-Commerce",
 					'data' => $this->m_cart->getCheckout($id),
 					'totalItems' => $this->cart->total_items()
 				];
-
-			}else{
+			} else {
 				$data = [
 					'title' => "E-Commerce",
 					'data' => false,
@@ -122,15 +126,15 @@ class Welcome extends CI_Controller {
 				];
 			}
 			frontEnd('user/riwayat', $data);
-
-		}else{
+		} else {
 			echo "<script>alert('Tidak bisa melihat riwayat orang lain')</script>";
 			redirect($_SERVER["HTTP_REFERER"]);
 		}
 	}
 
-	function detailriwayat($id){
-		if($this->session->userdata('user_logged')['id_user'] == $id){
+	function detailriwayat($id)
+	{
+		if ($this->session->userdata('user_logged')['id_user'] == $id) {
 			$data = [];
 			if ($this->m_cart->getDetailCheckout($this->uri->segment(3))) {
 				$data = [
@@ -139,7 +143,7 @@ class Welcome extends CI_Controller {
 					'totalItems' => $this->cart->total_items(),
 					// 'qrcode' => QRcode::
 				];
-			}else{
+			} else {
 				$data = [
 					'title' => "E-Commerce",
 					'data' => null,
@@ -149,21 +153,22 @@ class Welcome extends CI_Controller {
 
 
 			frontEnd('user/detailriwayat', $data);
-
-		}else{
+		} else {
 			echo "tidak boleh melihat";
 			redirect("login");
 		}
 	}
 
-	function barangditerima($id, $uuid, $status){
-		if($status == "barangditerima"){
+	function barangditerima($id, $uuid, $status)
+	{
+		if ($status == "barangditerima") {
 			$this->m_produk->barangditerima($uuid);
-			redirect("detailriwayat/".$id."/".$uuid, "refresh");
+			redirect("detailriwayat/" . $id . "/" . $uuid, "refresh");
 		}
 	}
 
-	function barangtidakditerima(){
+	function barangtidakditerima()
+	{
 		$this->form_validation->set_rules('id_user', 'Id', 'trim|required');
 		$this->form_validation->set_rules('uuid', 'UUID', 'trim|required');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required');
@@ -172,7 +177,7 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('harga_barang', 'Deskripsi', 'trim|required');
 		$this->form_validation->set_rules('jumlah_pengembalian', 'Deskripsi', 'trim|required');
 
-		if($this->form_validation->run()){
+		if ($this->form_validation->run()) {
 			$id = $this->input->post('id_user');
 			$status = $this->input->post("status");
 			$uuid = $this->input->post("uuid");
@@ -181,7 +186,7 @@ class Welcome extends CI_Controller {
 			$harga_barang = $this->input->post("harga_barang");
 			$jumlah_pengembalian = $this->input->post("jumlah_pengembalian");
 
-			if($status == "barangtidakditerima" && $id != "" && $uuid != "" && $deskripsi != ""){
+			if ($status == "barangtidakditerima" && $id != "" && $uuid != "" && $deskripsi != "") {
 
 				$config['upload_path'] = './assets/uploads/foto_refund';
 				$config['allowed_types'] = 'jpg|png|img|jpeg';
@@ -191,22 +196,22 @@ class Welcome extends CI_Controller {
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if ( !$this->upload->do_upload("gambarRefund") ){
+				if (!$this->upload->do_upload("gambarRefund")) {
 					$error = array('error' => $this->upload->display_errors());
 					// $this->session->set_flashdata("infoFlashAdd", $error[0]);
 					// redirect("add_data");
 					echo "<script>alert('Gambar tidak valid!')</script>";
-					redirect("detailriwayat/".$id."/".$uuid, "refresh");
-				}else{
+					redirect("detailriwayat/" . $id . "/" . $uuid, "refresh");
+				} else {
 					// $data = array('upload_data' => $this->upload->data());
 					$data = $this->upload->data();
-					$datacheckout= $this->db->get_where('checkout', ['uuid_checkout' => $uuid]);
+					$datacheckout = $this->db->get_where('checkout', ['uuid_checkout' => $uuid]);
 					$nominal = 0;
-					if($datacheckout->num_rows() > 0){
+					if ($datacheckout->num_rows() > 0) {
 						$res = $datacheckout->result_object();
-						foreach($res as $val){
+						foreach ($res as $val) {
 							$res_product = $this->db->get_where("data_barang", ['id_barang' => $val->id_barang])->result_object();
-							foreach($res_product as $value){
+							foreach ($res_product as $value) {
 								$updateStok = $value->stok_barang + $val->banyak;
 
 								$dataUpdate = [
@@ -216,11 +221,10 @@ class Welcome extends CI_Controller {
 								$this->db->set($dataUpdate);
 								$this->db->where("id_barang", $value->id_barang);
 								$this->db->update('data_barang');
-								
 							}
 
 							$dataUpdateStatus = [
-								'status_pembayaran'=> $radio,
+								'status_pembayaran' => $radio,
 								'datetime_pay' => date("Y-m-d H:i:s")
 							];
 
@@ -235,33 +239,32 @@ class Welcome extends CI_Controller {
 								'id_users' => $id,
 								'status_pengiriman' => $status,
 								'status_pengembalian' => $radio,
-								'nominal_refund' => $val->harga*$val->banyak,
+								'nominal_refund' => $val->harga * $val->banyak,
 								'deskripsi' => $this->input->post("deskripsi"),
 								'gambar_refund' => $data['file_name'],
 								'jumlah_pengembalian' => $jumlah_pengembalian
 							];
-							$this->db->insert("refund",$datarefund);
+							$this->db->insert("refund", $datarefund);
 						}
 					}
-					redirect("detailriwayat/".$id."/".$uuid, "refresh");
+					redirect("detailriwayat/" . $id . "/" . $uuid, "refresh");
 				}
 			}
-		}else{
+		} else {
 			// $this->session->set_flashdata('infoFlashRefund', 'Isi semua bidang');
 			// redirect("detailriwayat/".$id."/".$uuid, "refresh");
 		}
-
-
 	}
 
-	function recommend(){
+	function recommend()
+	{
 
 		$this->form_validation->set_rules('uuid', 'UUID', 'trim|required');
 		$this->form_validation->set_rules('bahan', 'Bahan', 'trim|required');
 		$this->form_validation->set_rules('model', 'Model', 'trim|required');
 		$this->form_validation->set_rules('ukuran', 'Ukuran', 'trim|required');
 
-		if($this->form_validation->run() == TRUE) {
+		if ($this->form_validation->run() == TRUE) {
 			$uuid = $this->input->post("uuid");
 			$bahan = $this->input->post("bahan");
 			$model = $this->input->post("model");
@@ -275,16 +278,11 @@ class Welcome extends CI_Controller {
 			];
 
 			$this->m_produk->recommend($data, $bahan, $model, $ukuran, $uuid);
-			redirect('welcome','refresh');
+			redirect('welcome', 'refresh');
 		} else {
 			echo "<script>alert('Harap isi kuesioner')</script>";
 			echo "<script>localStorage.clear()</script>";
-			redirect('welcome','refresh');
+			redirect('welcome', 'refresh');
 		}
-		
-
-		
 	}
-
-
 }

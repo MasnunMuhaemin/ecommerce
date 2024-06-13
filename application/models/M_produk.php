@@ -1,102 +1,115 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 date_default_timezone_set('Asia/Jakarta');
-class M_produk extends CI_Model {
+class M_produk extends CI_Model
+{
 
-	function getAll(){
+	function getAll()
+	{
 		$data = $this->db->get('data_barang');
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function add_to_cart($id){
+	function add_to_cart($id)
+	{
 		$data = $this->db->get_where('data_barang', ['id_barang' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	function getProduk($id){
+	function getProduk($id)
+	{
 		$data = $this->db->get_where('data_barang', ['id_barang' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	function getBahan($id){
+	function getBahan($id)
+	{
 		$data = $this->db->get_where('data_barang', ['bahan' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_array();
-		}else{
+		} else {
 			return null;
 		}
 	}
-	function getModel($id){
+	function getModel($id)
+	{
 		$data = $this->db->get_where('data_barang', ['model' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_array();
-		}else{
+		} else {
 			return null;
 		}
 	}
-	function getUkuran($id){
+	function getUkuran($id)
+	{
 		$data = $this->db->get_where('data_barang', ['ukuran' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_array();
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	function insert($data){
+	function insert($data)
+	{
 		$this->db->insert('data_barang', $data);
 	}
 
-	function insertPengeluaran($data){
+	function insertPengeluaran($data)
+	{
 		$this->db->insert('pengeluaran', $data);
 	}
 
-	function getPengeluaran(){
+	function getPengeluaran()
+	{
 		$data = $this->db->get('vw_report_checkout_per_month');
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getPengeluaran_per_year(){
+	function getPengeluaran_per_year()
+	{
 		$data = $this->db->get('vw_report_checkout_per_year');
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getAllPengeluaran(){
+	function getAllPengeluaran()
+	{
 		$data = $this->db->get('vw_report_checkout_per_month');
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getAllTransactionCO(){
+	function getAllTransactionCO()
+	{
 		$this->db->select('*');
 		$this->db->from('vw_report_checkout');
 		// $this->db->group_by('uuid_checkout');
@@ -104,36 +117,39 @@ class M_produk extends CI_Model {
 		$data = $this->db->get();
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getRefund(){
+	function getRefund()
+	{
 		$data = $this->db->get("vw_refund");
-		if($data->num_rows() > 0){
+		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getDetailtransactionCO($uuid){
+	function getDetailtransactionCO($uuid)
+	{
 		$this->db->select('*');
 		$this->db->from('vw_report_checkout');
 		$this->db->where('uuid_checkout', $uuid);
 		$data = $this->db->get();
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function konfirmasi($uuid){
+	function konfirmasi($uuid)
+	{
 
 		$dataUpdateStatus = [
-			'status_pembayaran'=>"Approve",
+			'status_pembayaran' => "Approve",
 			'datetime_pay' => date("Y-m-d H:i:s")
 		];
 
@@ -141,9 +157,9 @@ class M_produk extends CI_Model {
 
 		if ($data->num_rows() > 0) {
 			$res = $data->result_object();
-			foreach($res as $val){
+			foreach ($res as $val) {
 				$res_product = $this->getProduk($val->id_barang);
-				foreach($res_product as $value){
+				foreach ($res_product as $value) {
 					$updateStok = $value->stok_barang - $val->banyak;
 
 					$dataUpdate = [
@@ -155,17 +171,17 @@ class M_produk extends CI_Model {
 					$this->db->update('data_barang');
 				}
 			}
-		}else{
+		} else {
 			return null;
 		}
 
 		$this->db->set($dataUpdateStatus);
 		$this->db->where('uuid_checkout', $uuid);
 		$this->db->update('checkout');
-
 	}
 
-	function barangdikemas($uuid){
+	function barangdikemas($uuid)
+	{
 		$updateStatus = [
 			'status_pembayaran' => "Barang dikemas"
 		];
@@ -174,7 +190,8 @@ class M_produk extends CI_Model {
 		$this->db->update('checkout');
 	}
 
-	function barangdikirim($uuid){
+	function barangdikirim($uuid)
+	{
 		$updateStatus = [
 			'status_pembayaran' => "Barang dikirim"
 		];
@@ -183,7 +200,8 @@ class M_produk extends CI_Model {
 		$this->db->update('checkout');
 	}
 
-	function barangditerima($uuid){
+	function barangditerima($uuid)
+	{
 		$updateStatus = [
 			'status_pembayaran' => "Barang diterima"
 		];
@@ -192,9 +210,10 @@ class M_produk extends CI_Model {
 		$this->db->update('checkout');
 	}
 
-	function pembayaran($uuid, $bukti){
+	function pembayaran($uuid, $bukti)
+	{
 		$data = [
-			'status_pembayaran'=>"Sudah Melakukan Pembayaran",
+			'status_pembayaran' => "Sudah Melakukan Pembayaran",
 			'bukti_pembayaran' => $bukti,
 			'datetime_pay' => date("Y-m-d H:i:s")
 		];
@@ -204,28 +223,31 @@ class M_produk extends CI_Model {
 		$this->db->update('checkout');
 	}
 
-	function edit($id, $data){
+	function edit($id, $data)
+	{
 		return $this->db->where('id_barang', $id)->update('data_barang', $data);
 	}
 
-	function getDetailProduk($id){
+	function getDetailProduk($id)
+	{
 		$data = $this->db->get_where('data_barang', ['id_barang' => $id]);
 
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	function recommend($dataArr, $bahan, $model, $ukuran, $uuid){
+	function recommend($dataArr, $bahan, $model, $ukuran, $uuid)
+	{
 
 		$this->db->insert("data_recommend", $dataArr);
 
 		$lastId = $insert_id = $this->db->insert_id();
 
-		if($this->getBahan($bahan)){
-			foreach($this->getBahan($bahan) as $key => $val){
+		if ($this->getBahan($bahan)) {
+			foreach ($this->getBahan($bahan) as $key => $val) {
 				$data = [
 					'id_recommend' => $lastId,
 					'id_barang' => $val['id_barang'],
@@ -243,8 +265,8 @@ class M_produk extends CI_Model {
 				var_dump($data);
 				$this->db->insert("recommended", $data);
 			}
-		}else if($this->getModel($model)){
-			foreach($this->getModel($bahan) as $key => $val){
+		} else if ($this->getModel($model)) {
+			foreach ($this->getModel($bahan) as $key => $val) {
 				$data = [
 					'id_recommend' => $lastId,
 					'id_barang' => $val['id_barang'],
@@ -262,8 +284,8 @@ class M_produk extends CI_Model {
 
 				$this->db->insert("recommended", $data);
 			}
-		}else if($this->getUkuran($ukuran)){
-			foreach($this->getUkuran($ukuran) as $key => $val){
+		} else if ($this->getUkuran($ukuran)) {
+			foreach ($this->getUkuran($ukuran) as $key => $val) {
 
 				$data = [
 					'id_recommend' => $lastId,
@@ -282,44 +304,44 @@ class M_produk extends CI_Model {
 				var_dump($data);
 				$this->db->insert("recommended", $data);
 			}
-		}else{
+		} else {
 			echo "<br><pre>";
 			var_dump($this->getAll());
 			echo "</pre>";
 		}
-
-
 	}
 
-	function getRecommend(){
+	function getRecommend()
+	{
 		$data = $this->db->get('vw_recommend_produk');
 		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getRecommended($harga, $bahan){
+	function getRecommended($harga, $bahan)
+	{
 		// $data = "select * from data_barang where harga_barang <= ".$harga." AND bahan = ".$bahan;
-		$data = $this->db->get_where('data_barang', ["harga_barang <=" => $harga, "bahan"=>$bahan]);
+		$data = $this->db->get_where('data_barang', ["harga_barang <=" => $harga, "bahan" => $bahan]);
 
-		if($data->num_rows() > 0){
+		if ($data->num_rows() > 0) {
 			return $data->result_object();
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function getRecommendByID($id){
-		$data = $this->db->order_by("banyak","desc")->get_where("vw_recommend_produk", ['id_user' => $id]);
-		if($data->num_rows() > 0){
+	function getRecommendByID($id)
+	{
+		$data = $this->db->order_by("banyak", "desc")->get_where("vw_recommend_produk", ['id_user' => $id]);
+		if ($data->num_rows() > 0) {
 			return $data->result_array();
-		}else{
+		} else {
 			return false;
 		}
 	}
-
 }
 
 /* End of file M_produk.php */

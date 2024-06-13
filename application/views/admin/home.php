@@ -30,10 +30,12 @@ Content Wrapper. Contains page content -->
             <div class="info-box-content">
               <span class="info-box-text">Data Produk</span>
               <span class="info-box-number">
-                <?php if($data != null){ foreach($data as $key => $val) {}?> 
-                <?= $key+1  ?> Produk tersedia
+                <?php if ($data != null) {
+                  foreach ($data as $key => $val) {
+                  } ?>
+                  <?= $key + 1  ?> Produk tersedia
 
-                <?php }else{
+                <?php } else {
                   echo 0;
                 } ?>
                 <small></small>
@@ -51,9 +53,11 @@ Content Wrapper. Contains page content -->
             <div class="info-box-content">
               <span class="info-box-text">Pengeluaran</span>
               <span class="info-box-number">
-                <?php if($dataPengeluaran != null){ foreach($dataPengeluaran as $key => $val) {}?> 
-                <?= $key+1  ?> Produk telah di checkout
-                <?php }else{
+                <?php if ($dataPengeluaran != null) {
+                  foreach ($dataPengeluaran as $key => $val) {
+                  } ?>
+                  <?= $key + 1  ?> Produk telah di checkout
+                <?php } else {
                   echo 0;
                 } ?>
               </span>
@@ -74,11 +78,15 @@ Content Wrapper. Contains page content -->
             <div class="info-box-content">
               <span class="info-box-text">Pendapatan</span>
               <span class="info-box-number">
-                <?php if($dataPengeluaranFromLaporan != null){ $total = 0; foreach($dataPengeluaranFromLaporan as $key => $val) { $total += $val->subtotal ;}?> 
-               Rp. <?= number_format($total)  ?>
-              <?php }else{
-                echo 0;
-              } ?>
+                <?php if ($dataPengeluaranFromLaporan != null) {
+                  $total = 0;
+                  foreach ($dataPengeluaranFromLaporan as $key => $val) {
+                    $total += $val->subtotal;
+                  } ?>
+                  Rp. <?= number_format($total)  ?>
+                <?php } else {
+                  echo 0;
+                } ?>
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -86,63 +94,66 @@ Content Wrapper. Contains page content -->
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        
+
         <!-- /.col -->
       </div>
 
       <div class="row">
-       <div class="col-md-12">
-        <!-- TABLE: LATEST ORDERS -->
-        <div class="card">
-          <div class="card-header border-transparent">
-            <h3 class="card-title">Data Produk</h3>
+        <div class="col-md-12">
+          <!-- TABLE: LATEST ORDERS -->
+          <div class="card">
+            <div class="card-header border-transparent">
+              <h3 class="card-title">Data Produk</h3>
 
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
             </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Harga Barang</th>
-                    <th>Stok Barang</th>
-                    <th>Deskripsi Barang</th>
-                    <!-- <th>Gambar Barang</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php if($data != null){ foreach($data as $key => $val){ ?>
-                    <?php if($key >= 0 && $key <= 9){ ?>
-                  <tr>
-                    <td><?= $key+1 ?></td>
-                    <td><a href="<?= base_url("edit_data/".$val->id_barang) ?>"><?= $val->kode_barang ?></a></td>
-                    <td><!-- <a href="pages/examples/invoice.html"> --><?= $val->nama_barang ?><!-- </a> --></td>
-                    <td>Rp. <?= number_format($val->harga_barang) ?></td>
-                    <td><?= $val->stok_barang ?></td>
-                    <td><?= $val->deskripsi ?></td>
-                    
-                  </tr>
-                  <?php }}} ?>
-                </tbody>
-              </table>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Kode Barang</th>
+                      <th>Nama Barang</th>
+                      <th>Harga Barang</th>
+                      <th>Stok Barang</th>
+                      <th>Deskripsi Barang</th>
+                      <!-- <th>Gambar Barang</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php if ($data != null) {
+                      foreach ($data as $key => $val) { ?>
+                        <?php if ($key >= 0 && $key <= 9) { ?>
+                          <tr>
+                            <td><?= $key + 1 ?></td>
+                            <td><a href="<?= base_url("edit_data/" . $val->id_barang) ?>"><?= $val->kode_barang ?></a></td>
+                            <td><!-- <a href="pages/examples/invoice.html"> --><?= $val->nama_barang ?><!-- </a> --></td>
+                            <td>Rp. <?= number_format($val->harga_barang) ?></td>
+                            <td><?= $val->stok_barang ?></td>
+                            <td><?= $val->deskripsi ?></td>
+
+                          </tr>
+                    <?php }
+                      }
+                    } ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div class="card-footer clearfix">
-            <a href="<?= base_url("view_data") ?>" class="btn btn-sm btn-info float-left">Lihat Semua Produk</a>
+            <div class="card-footer clearfix">
+              <a href="<?= base_url("view_data") ?>" class="btn btn-sm btn-info float-left">Lihat Semua Produk</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </section>
-  </div>
+  </section>
+</div>
